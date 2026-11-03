@@ -1379,12 +1379,13 @@
     document.addEventListener('click', e => {
       const button = e.target.closest('[data-action]');
       if (!button) return;
-      const [verb, type, id] = button.dataset.action.split(':');
+      const rawAction = button.dataset.action;
+      const [verb, type, id] = rawAction.split(':');
 
       if (verb === 'enter') { role = type; actor = null; render(); return; }
-      if (action === 'back' || action === 'logout') { role = null; actor = null; view = ''; modal = null; render(); return; }
+      if (rawAction === 'back' || rawAction === 'logout') { role = null; actor = null; view = ''; modal = null; render(); return; }
       if (verb === 'view') { view = type; render(); return; }
-      if (action === 'close-modal') { modal = null; render(); return; }
+      if (rawAction === 'close-modal') { modal = null; render(); return; }
       if (['add', 'delete'].includes(verb)) { modal = { mode: verb, type, id }; render(); return; }
       if (verb === 'confirm-delete') {
         db[type] = db[type].filter(r => r.id !== id);
