@@ -1094,20 +1094,6 @@ async function syncDataToSpreadsheet(actionType, payload) {
   }
 }
 
-// Fungsi untuk mengirim/menyimpan perubahan data ke Google Spreadsheet (Backend)
-async function syncDataToSpreadsheet(actionType, payload) {
-  if (!API_URL || API_URL.includes("Z...")) return;
-  try {
-    await fetch(API_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: actionType, data: payload })
-    });
-  } catch(err) {
-    console.error("Gagal menyimpan ke Google Sheets:", err);
-  }
-}
 
     // --- Render App ---
     function render() {
