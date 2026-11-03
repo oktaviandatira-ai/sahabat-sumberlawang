@@ -1080,30 +1080,17 @@
     }
 
     // --- KONFIGURASI GOOGLE APPS SCRIPT ---
-const API_URL = "https://script.google.com/macros/s/AKfycbwgXH2YzF0YjISRCSLHsnm_SB5wMRZkXVyIuUwe34QiQsKcCA4WXpV0k4wx-qiUUVW1/exec"; 
-
-// Fungsi untuk mengambil data dari Google Spreadsheet (Backend)
-async function loadDataFromSpreadsheet() {
-  if (!API_URL || API_URL.includes("MASUKKAN")) return; 
+async function syncDataToSpreadsheet(actionType, payload) {
+  const API_URL = "https://script.google.com/macros/s/AKfycbxemYW1UYuwHkGAExu05j83al7uj1zP3Klz4mpe2gj7qB81e3WJGjhJGNm9HC1imnZw/exec"; // Ganti dengan URL deployment Anda
   try {
-    const response = await fetch(API_URL);
-    const result = await response.json();
-    if(result.status === 'success' && result.data) {
-      // Petakan data dari Google Sheets (DataSiswa) ke struktur db.students aplikasi
-      // Asumsi kolom spreadsheet: [nis, nisn, name, gender, ayah, ibu] atau sesuaikan urutannya
-      db.students = result.data.map((r, i) => ({
-        id: 's' + (i + 1),
-        nis: String(r[0] || ''),
-        nisn: String(r[1] || ''),
-        name: String(r[2] || 'Siswa Tanpa Nama'),
-        gender: String(r[3] || 'L'),
-        classId: 'c1',
-        active: true
-      }));
-      console.log("Database berhasil disinkronkan dari Google Spreadsheet!");
-    }
+    await fetch(API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: actionType, data: payload })
+    });
   } catch(err) {
-    console.error("Gagal memuat database Google Sheets, menggunakan data demo:", err);
+    console.error("Gagal menyimpan ke Google Sheets:", err);
   }
 }
 
