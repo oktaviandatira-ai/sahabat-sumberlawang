@@ -2208,8 +2208,14 @@
         activities.forEach((activity, i) => {
           const status = data.get('a' + i);
           if (target.some(h => h.studentId === studentId && h.periodId === period.id && h.date === date && h.activity === activity)) return;
-          const habitObj = { id: uid(), studentId, periodId: period.id, date, activity, status, note: String(data.get('note') || ''), verified: false, creatorId: actor.id };
-          target.push(habitObj);
+          const habitObj = { id: uid(), studentId, periodId: period.id, date, activity, status, note: String(data.get('note') || ''), verified: true, creatorId: actor.id };
+target.push(habitObj);
+
+// Langsung berikan poin EXP jika statusnya "Terlaksana" dan sudah otomatis terverifikasi
+award(habitObj, kind);
+
+// Simpan Pembiasaan Sekolah / Rumah ke Spreadsheet
+syncDataToSpreadsheet(kind === 'school' ? 'addSchoolHabit' : 'addHomeHabit', habitObj);
 
           // Simpan Pembiasaan Sekolah / Rumah ke Spreadsheet
           syncDataToSpreadsheet(kind === 'school' ? 'addSchoolHabit' : 'addHomeHabit', habitObj);
