@@ -2201,7 +2201,8 @@ async function syncDataToSpreadsheet(actionType, payload) {
     });
 
     // Inisialisasi awal render
-    render();
+    // Inisialisasi awal memuat data dari Spreadsheet lalu render aplikasi
+loadDataFromSpreadsheet().then(() => render());
   </script>
 </body>
 
