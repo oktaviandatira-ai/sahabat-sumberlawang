@@ -1,0 +1,2208 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAHABAT — SD Aisyiyah Unggulan Sumberlawang</title>
+
+  <!-- External Libraries & Fonts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=Fraunces:wght@700&amp;display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --deep: #103b39;
+      --teal: #087b75;
+      --pale: #edf7f3;
+      --cream: #f7f4eb;
+      --ink: #163e3a;
+      --muted: #66827d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      min-height: 100%;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    :focus-visible {
+      outline: 3px solid #e6a73d !important;
+      outline-offset: 2px;
+    }
+
+    .access {
+      min-height: calc(100 * min(var(--vh, 1vh), 1vh));
+      background: linear-gradient(115deg, #123d3b, #297c76 72%, #408f88);
+      color: white;
+      padding: clamp(22px, 5vw, 56px);
+    }
+
+    .access-inner {
+      max-width: 1160px;
+      margin: auto;
+      min-height: calc(88 * min(var(--vh, 1vh), 1vh));
+      display: flex;
+      flex-direction: column;
+    }
+
+    .access-logo {
+      width: 200px;
+      max-width: 55%;
+      height: 68px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .access h1 {
+      font-family: Fraunces, serif;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.05;
+      margin: 14px 0;
+    }
+
+    .access-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: auto;
+      margin-bottom: 30px;
+    }
+
+    .access-card {
+      background: #fff;
+      color: var(--ink);
+      padding: 25px 21px 18px;
+      border-radius: 13px;
+      min-height: 245px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 12px 30px #002f2b20;
+    }
+
+    .access-card .role-icon {
+      color: var(--teal);
+      margin-bottom: 15px;
+    }
+
+    .access-card h2 {
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .access-card p {
+      font-size: 13px;
+      color: #657d79;
+      line-height: 1.45;
+    }
+
+    .solid {
+      background: var(--teal);
+      color: white;
+      border-radius: 8px;
+      padding: 10px 17px;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: .02em;
+    }
+
+    .access-card .solid {
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .solid:hover {
+      background: #075d59;
+    }
+
+    .login-page {
+      min-height: calc(100 * min(var(--vh, 1vh), 1vh));
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--cream);
+    }
+
+    .login-photo {
+      position: relative;
+      min-height: 520px;
+      overflow: hidden;
+      background: #174f4d;
+    }
+
+    .login-photo img.photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
+    .login-photo:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #073f3bc9, #267c75a8);
+    }
+
+    .login-photo-content {
+      position: absolute;
+      z-index: 1;
+      inset: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+    }
+
+    .login-photo-content img {
+      width: 190px;
+      height: 75px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .login-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .login-box {
+      width: min(100%, 390px);
+    }
+
+    .login-box h1 {
+      font-size: 30px;
+      font-weight: 800;
+      margin: 18px 0 4px;
+    }
+
+    .login-card,
+    .card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px #103b390b;
+      border: 1px solid #e4eeea;
+    }
+
+    .login-card {
+      padding: 23px;
+      margin-top: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea,
+    .filter-control {
+      width: 100%;
+      border: 1px solid #d5e4df;
+      border-radius: 7px;
+      background: white;
+      padding: 9px 11px;
+      color: var(--ink);
+      min-height: 38px;
+    }
+
+    .field textarea {
+      min-height: 80px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .app-shell {
+      display: flex;
+      height: calc(100 * min(var(--vh, 1vh), 1vh));
+      width: 100%;
+      background: var(--pale);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 238px;
+      flex: none;
+      background: var(--deep);
+      color: #effcf8;
+      padding: 20px 13px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: calc(100 * min(var(--vh, 1vh), 1vh));
+      overflow-y: auto;
+      z-index: 20;
+    }
+
+    .side-logo {
+      width: 145px;
+      height: 56px;
+      object-fit: contain;
+      object-position: left;
+    }
+
+    .side-title {
+      font-family: Fraunces, serif;
+      font-size: 19px;
+      margin: 7px 9px 0;
+    }
+
+    .side-caption {
+      font-size: 10px;
+      color: #92c7bd;
+      margin: 0 9px 22px;
+    }
+
+    .nav-group {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      color: #83b9ae;
+      margin: 15px 10px 7px;
+    }
+
+    .nav-item {
+      width: 100%;
+      text-align: left;
+      padding: 10px 11px;
+      color: #e0f4ef;
+      border-radius: 7px;
+      font-size: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: #205c58;
+      color: #fff;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      border-top: 1px solid #3b6c65;
+      padding-top: 10px;
+    }
+
+    .workspace {
+      flex: 1;
+      min-width: 0;
+      margin-left: 238px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .topbar {
+      background: white;
+      padding: 12px clamp(15px, 2vw, 30px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      min-height: 66px;
+      flex: none;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar strong {
+      font-size: 13px;
+    }
+
+    .content {
+      padding: 20px clamp(15px, 2vw, 30px) 35px;
+      max-width: 1500px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .demo-banner {
+      background: #fffbea;
+      border: 1px solid #f5df93;
+      padding: 12px 15px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-bottom: 21px;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: .14em;
+      font-weight: 800;
+      color: #07857a;
+      text-transform: uppercase;
+    }
+
+    .page-title {
+      font-size: clamp(22px, 2.5vw, 29px);
+      font-weight: 800;
+      margin: 2px 0 3px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin: 19px 0;
+    }
+
+    .stat {
+      padding: 18px;
+      min-height: 104px;
+    }
+
+    .stat strong {
+      font-size: 28px;
+      display: block;
+      margin: 7px 0 0;
+    }
+
+    .stat small {
+      color: var(--muted);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .card {
+      padding: 19px;
+    }
+
+    .card h2 {
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0 0 12px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 16px 0;
+    }
+
+    .toolbar .filter-control {
+      width: auto;
+      max-width: 100%;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 610px;
+      font-size: 12px;
+    }
+
+    .data-table th {
+      background: #f0f8f5;
+      color: #36736c;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: .06em;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 11px;
+      border-bottom: 1px solid #edf2ef;
+      vertical-align: middle;
+    }
+
+    .data-table tr:hover td {
+      background: #f8fcfa;
+    }
+
+    .small-btn {
+      border: 1px solid #cfe1db;
+      background: white;
+      color: #087b75;
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .small-btn:hover {
+      background: #eef8f4;
+    }
+
+    .danger {
+      color: #ae4640;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 99px;
+      background: #e3f8ed;
+      color: #168366;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .pill.off {
+      background: #eee;
+      color: #68736e;
+    }
+
+    .notice {
+      padding: 11px 14px;
+      border-radius: 8px;
+      background: #dff7e9;
+      color: #075b47;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .notice.error {
+      background: #ffe9e5;
+      color: #a02e2e;
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .badge-card {
+      text-align: center;
+      background: #f6faf7;
+      border: 1px solid #cde3da;
+      border-radius: 12px;
+      padding: 14px 7px;
+      min-height: 145px;
+    }
+
+    .badge-card.locked {
+      filter: grayscale(1);
+      opacity: .55;
+    }
+
+    .badge-medal {
+      font-size: 36px;
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .chart-holder {
+      height: 240px;
+      position: relative;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+    }
+
+    .full {
+      grid-column: 1/-1;
+    }
+
+    /* Operator desktop dashboard */
+    .operator-dashboard {
+      padding-top: 12px;
+      padding-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .operator-dashboard .demo-banner {
+      margin-bottom: 10px;
+      padding: 8px 12px;
+    }
+
+    .operator-dashboard .page-title {
+      margin: 0 0 2px;
+    }
+
+    .operator-dashboard .operator-filters {
+      margin-top: 10px;
+      padding: 10px 14px;
+    }
+
+    .operator-dashboard .toolbar {
+      margin: 8px 0 0;
+      gap: 7px;
+    }
+
+    .operator-dashboard .field {
+      gap: 3px;
+    }
+
+    .operator-dashboard .field input,
+    .operator-dashboard .field select,
+    .operator-dashboard .filter-control {
+      padding: 6px 9px;
+      min-height: 31px;
+    }
+
+    .operator-dashboard .stats {
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .operator-dashboard .stat {
+      padding: 9px 12px;
+      min-height: 62px;
+    }
+
+    .operator-dashboard .stat strong {
+      font-size: 20px;
+      margin: 3px 0 0;
+    }
+
+    .operator-dashboard .card {
+      padding: 12px;
+      border-radius: 11px;
+    }
+
+    .operator-dashboard .card h2 {
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .operator-dashboard .card.mt-4 {
+      margin-top: 10px;
+    }
+
+    .operator-dashboard .chart-holder {
+      height: 112px;
+    }
+
+    .operator-dashboard .grid-2 {
+      gap: 8px;
+    }
+
+    .operator-dashboard .data-table {
+      font-size: 11px;
+      min-width: 0;
+    }
+
+    .operator-dashboard .data-table th,
+    .operator-dashboard .data-table td {
+      padding: 6px 8px;
+    }
+
+    .operator-dashboard .grid-2.mt-4 {
+      margin-top: 10px;
+    }
+
+    .operator-dashboard .table-wrap {
+      max-height: 92px;
+      overflow: auto;
+    }
+
+    .operator-dashboard .table-wrap+.chart-holder {
+      height: 82px;
+    }
+
+    .operator-dashboard .operator-filters .toolbar .field {
+      flex: 1 1 130px;
+    }
+
+    .operator-dashboard .operator-filters .small-btn {
+      align-self: end;
+    }
+
+    @media (min-width: 951px) {
+      .operator-dashboard {
+        height: calc(100 * min(var(--vh, 1vh), 1vh) - 66px);
+        min-height: 0;
+      }
+
+      .operator-dashboard .content {
+        padding-top: 12px;
+      }
+
+      .operator-dashboard .grid-2.mt-4 .card {
+        min-height: 154px;
+      }
+
+      .operator-dashboard .grid-2.mt-4 .chart-holder {
+        height: 92px;
+      }
+
+      .operator-dashboard .card:has(#home-donut) {
+        min-height: 126px;
+      }
+
+      .operator-dashboard .card:has(#home-donut) .chart-holder {
+        height: 86px;
+      }
+    }
+
+    @media (max-width: 950px) {
+      .operator-dashboard {
+        overflow: visible;
+      }
+
+      .operator-dashboard .chart-holder {
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 690px) {
+      .operator-dashboard .chart-holder,
+      .operator-dashboard .grid-2.mt-4 .chart-holder {
+        height: 210px;
+      }
+
+      .operator-dashboard .stat {
+        min-height: 72px;
+      }
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #edf3ef;
+      font-size: 13px;
+    }
+
+    .check-row select {
+      max-width: 180px;
+    }
+
+    .message {
+      padding: 12px;
+      border-radius: 10px;
+      background: #f0f8f5;
+      margin: 9px 0;
+      font-size: 12px;
+    }
+
+    .message.mine {
+      background: #e2f3ee;
+      margin-left: 12%;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: #092c2abb;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 17px;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 15px;
+      padding: 22px;
+      width: min(100%, 620px);
+      max-height: 90%;
+      overflow: auto;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 80;
+      max-width: 350px;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    .backdrop {
+      display: none;
+    }
+
+    @media (max-width: 950px) {
+      .workspace {
+        margin-left: 0;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: 0;
+        transform: translateX(-100%);
+        transition: transform .25s;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .backdrop.open {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: #072b2a88;
+        z-index: 19;
+      }
+
+      .mobile-menu {
+        display: inline-flex;
+      }
+
+      .badge-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 690px) {
+      .access-cards,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .access-cards {
+        margin-top: 35px;
+      }
+
+      .access-card {
+        min-height: 185px;
+      }
+
+      .login-page {
+        grid-template-columns: 1fr;
+      }
+
+      .login-photo {
+        min-height: 260px;
+      }
+
+      .login-right {
+        padding: 35px 20px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .badge-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body class="w-full" style="background: rgb(237, 247, 243);">
+  <div id="app" class="w-full"></div>
+
+  <!-- Validation & Template Placeholders -->
+  <div id="template-validation" hidden aria-hidden="true">
+    <span data-template-id="access-title" style="color: #fff; font-weight: 700; font-size: 14px;">SAHABAT</span>
+    <span data-template-id="access-subtitle" style="color: #fff; font-weight: 700; font-size: 14px;">Sinergi Orang Tua dan Sekolah Pembentuk Anak Hebat</span>
+    <span data-template-id="access-description" style="color: #fff; font-weight: 400; font-size: 14px;">Bersinergi dalam pembiasaan, berkolaborasi dalam pendidikan, membentuk anak hebat.</span>
+    <span data-template-id="login-title" style="color: rgb(16, 59, 57); font-weight: 800; font-size: 14px;">Masuk SAHABAT</span>
+    <span data-template-id="login-description" style="color: rgb(102, 130, 125); font-weight: 400; font-size: 14px;">Pilih profil aktif untuk melanjutkan ke dashboard sesuai hak akses demo.</span>
+    <img data-template-id="login-photo" loading="lazy" src="https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="Anak-anak belajar bersama">
+    <img data-template-id="school-logo" loading="lazy" src="https://via.placeholder.com/150x50?text=Logo+SD" alt="Logo SD Aisyiyah Unggulan Sumberlawang">
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <template id="branding">
+    <img data-template-id="school-logo" loading="lazy" class="access-logo" alt="Logo">
+  </template>
+
+  <script>
+    // --- Data Mockup & Konstanta ---
+    const studentRows = [
+      ['152', '3207858839', 'Aisyah Safira Az-zahra', 'P', 'Rochmadi', 'Purwanti'],
+      ['153', '3190078232', 'Aldi Difta Devanka', 'P', 'Sri Sutrisno', 'Nia Alfasa Fitri'],
+      ['154', '3199330425', 'Alfina Grizel Widodo', 'P', 'Tri Widodo', 'Dwi Indah Aryani'],
+      ['155', '3192584381', "Alofa Flo'i Indria Atmanto", 'P', 'Suratmanto', 'Siska Indriani'],
+      ['156', '3208869574', 'Athira Ihza Ardillah', 'L', 'Wardoyo', 'Rizki Ardiani'],
+      ['157', '3207422092', 'Azraqi Biru Zaidan Hidayat', 'L', 'Sulomo', 'Siti Qomariyah'],
+      ['158', '3193920754', 'Danish Umar Abimanyu', 'P', 'Wakhid Ansori', 'Diah Ambar Wati'],
+      ['159', '3180974864', 'Dzakiyya Zahwa Al Zahro', 'P', 'Fatkurohman', 'Sulastri'],
+      ['160', '3191479362', 'Fadhillillah Ayumna Winata', 'L', 'Winoto', 'Triswati'],
+      ['161', '3198420718', 'Fathir Brilian Condro Adjie', 'P', 'Tunjung Laksono Utomo', 'Lilik Purwastuti'],
+      ['162', '3199147325', 'Gempita Alana Hesdan', 'P', 'Daniel Indra Ade Putra', 'Adik Hesti Kurnia'],
+      ['163', '3198335797', 'Hanif Naufal Al Ghoni', 'P', 'Edi Riyanto', 'Puspa Suci Mahanani'],
+      ['164', '3190180171', 'Muhammad Alfin Saputra', 'P', 'Purwanto', 'Sri Wahyuni'],
+      ['165', '3197661534', 'Nadira Almahyra Ibrahim', 'L', 'Nanang Ilham Ibrahim', 'Nita Rahayu Puspitasari'],
+      ['166', '3206391504', 'Najwa Kamila Majid', 'P', 'Lilik Purwanto', 'Nita Sri Hariyati'],
+      ['167', '3196212652', 'Narendra Beryl Argani', 'L', 'Agus Pudiyono', 'Tri Wijiastutik'],
+      ['168', '3195589344', 'Nazhan Adam Wibowo', 'L', 'Danang Kusumaryanto', 'Dyah Mutiaraning Yuniarti'],
+      ['169', '3198776369', 'Putri Anggrainisastrowidoyo', 'L', 'Purnomo Ari Nurcahyo', 'Nurul Wijayanti'],
+      ['170', '3195358915', 'Ravindra Kenzie Mahameru', 'P', 'Edy Sutanto', 'Iin Wulandari'],
+      ['171', '3201455390', 'Resyakila Dianisya An Nafii', 'P', 'Budi', 'Anis Setiyani'],
+      ['172', '3199087586', 'Shanum Azkhayra Mahya', 'L', 'Iwan Setiyono', 'Indri Nuryani'],
+      ['173', '3196261910', 'Wahyu Agung Julianto', 'L', '-', 'Jayem'],
+      ['174', '3197099722', 'Zylka Arla Nur Gesang', 'P', 'Ribut Alif Nur Gesang', 'Putri Kumala Sari']
+    ];
+
+    const schoolActivities = ['Kehadiran', 'Ketepatan Waktu', 'Kerapian Seragam', 'Salat Dhuha', 'Salat Zuhur', 'Adab dan Kesantunan', 'Kedisiplinan', 'Kemandirian'];
+    const homeActivities = ['Bangun Tepat Waktu', 'Salat Subuh', 'Salat Magrib', 'Salat Isya', "Tilawah Al-Qur'an", 'Membantu Orang Tua', 'Adab Makan', 'Sopan Santun Berbicara', 'Tidur Tepat Waktu'];
+    const weights = {
+      'Kehadiran': 10,
+      'Ketepatan Waktu': 10,
+      'Kerapian Seragam': 10,
+      'Salat Dhuha': 10,
+      'Adab dan Kesantunan': 20,
+      "Tilawah Al-Qur'an": 10,
+      'Membantu Orang Tua': 10,
+      'Tidur Tepat Waktu': 5
+    };
+    const levels = [
+      ['Sahabat Pemula', 0, '🌱'],
+      ['Sahabat Hebat', 75, '⭐'],
+      ['Pejuang Akhlak', 175, '🛡️'],
+      ['Teladan Karakter', 300, '🏅'],
+      ['Ananda Hebat', 500, '🏆']
+    ];
+    const menus = {
+      operator: [
+        ['UTAMA', 'Dashboard'],
+        ['DATA CENTER', 'Data Siswa', 'Data Guru', 'Data Orang Tua/Wali', 'Data Kelas', 'Relasi Keluarga', 'Tahun Ajaran & Periode'],
+        ['MONITORING & LAPORAN', 'Analytics / Recap Center', 'Laporan', 'Audit Log']
+      ],
+      guru: [
+        ['MENU', 'Beranda', 'Kelas Saya & Siswa Saya', 'School Habit Check', 'Kehadiran', 'Penilaian Karakter', 'Validasi', 'Buku Penghubung', 'Catatan Sinergi', 'Grafik Perkembangan', 'Laporan']
+      ],
+      parent: [
+        ['MENU', 'Beranda', 'Profil Ananda', 'Habit Tracker Rumah', 'Catatan Sinergi', 'Grafik Perkembangan', 'Laporan']
+      ]
+    };
+
+    // --- Utility Helper ---
+    const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const uid = () => 'd' + Math.random().toString(36).slice(2, 10);
+    const today = () => new Date().toISOString().slice(0, 10);
+
+    function initial() {
+      const students = studentRows.map((r, i) => ({
+        id: 's' + (i + 1),
+        nis: r[0],
+        nisn: r[1],
+        name: r[2],
+        gender: r[3],
+        classId: 'c1',
+        active: true
+      }));
+
+      const parents = studentRows.flatMap((r, i) =>
+        [['Ayah', r[4]], ['Ibu', r[5]]]
+          .filter(x => x[1] && x[1] !== '-')
+          .map((x, j) => ({
+            id: 'p' + (i + 1) + '-' + j,
+            name: x[1],
+            role: x[0],
+            username: r[0],
+            active: true
+          }))
+      );
+
+      const links = parents.map(p => ({
+        id: uid(),
+        parentId: p.id,
+        studentId: 's' + Number(p.id.split('-')[0].slice(1))
+      }));
+
+      return {
+        users: [
+          { id: 'u-op', username: 'operator-demo', role: 'operator' },
+          { id: 'u-g1', username: 'niken-demo', role: 'guru' },
+          { id: 'u-g2', username: 'tira-demo', role: 'guru' },
+          ...parents.map(p => ({ id: 'u-' + p.id, username: p.username, role: 'parent', refId: p.id }))
+        ],
+        students,
+        parents,
+        links,
+        teachers: [
+          { id: 'g1', name: 'Niken Nurmalisa, S.Pd.', nip: '', username: 'niken-demo', classId: 'c1', role: 'Wali Kelas', active: true, passwordConfigured: false },
+          { id: 'g2', name: 'Tira Oktavia, S.Pd.', nip: '', username: 'tira-demo', classId: 'c1', role: 'Wali Pendamping', active: true, passwordConfigured: false }
+        ],
+        classes: [
+          { id: 'c1', name: 'Kelas I Ukasyah bin Mihshan', teacherId: 'g1', active: true }
+        ],
+        years: [
+          { id: 'y1', name: '2026/2027', active: true },
+          { id: 'y0', name: '2025/2026', active: false }
+        ],
+        periods: [
+          { id: 'pr1', name: 'Gasal', yearId: 'y1', active: true },
+          { id: 'pr0', name: 'Genap', yearId: 'y0', active: false }
+        ],
+        schoolHabits: [],
+        homeHabits: [],
+        assessments: [],
+        messages: [],
+        exp: [],
+        audit: []
+      };
+    }
+
+    let db = initial(),
+      role = null,
+      actor = null,
+      view = '',
+      selectedStudent = 's19',
+      filters = {},
+      modal = null,
+      charts = [];
+
+    function activePeriod() {
+      return db.periods.find(p => p.active);
+    }
+
+    function periodLabel() {
+      const p = activePeriod();
+      return p ? `${db.years.find(y => y.id === p.yearId)?.name || ''} / ${p.name}` : 'Tidak ada periode aktif';
+    }
+
+    function log(action) {
+      db.audit.unshift({
+        id: uid(),
+        time: new Date().toLocaleString('id-ID'),
+        actor: actor?.name || 'Operator Demo',
+        action
+      });
+    }
+
+    function toast(text, error = false) {
+      document.getElementById('toast').innerHTML = `<div class="notice ${error ? 'error' : ''} shadow-xl">${esc(text)}</div>`;
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => document.getElementById('toast').innerHTML = '', 4800);
+    }
+
+ function logo(cls = '') {
+  return `<img src="logo/logo sdaus.jpeg" loading="lazy" class="${cls}" alt="Logo SD Aisyiyah Unggulan Sumberlawang">`;
+    }
+
+    function btn(label, action, klass = 'small-btn') {
+      return `<button type="button" class="${klass}" data-action="${esc(action)}">${esc(label)}</button>`;
+    }
+
+    function options(items, current) {
+      return items.map(([id, label]) => `<option value="${esc(id)}" ${String(id) === String(current) ? 'selected' : ''}>${esc(label)}</option>`).join('');
+    }
+
+    const studentOptions = (ids = null) => options(db.students.filter(s => s.active && (!ids || ids.includes(s.id))).map(s => [s.id, s.name]), selectedStudent);
+
+    function ownedIds() {
+      return actor?.studentId ? [actor.studentId] : db.links.filter(l => l.parentId === actor?.id).map(l => l.studentId);
+    }
+
+    function teacherIds() {
+      return db.students.filter(s => s.classId === actor?.classId && s.active).map(s => s.id);
+    }
+
+    function availableIds() {
+      return role === 'parent' ? ownedIds() : role === 'guru' ? teacherIds() : db.students.filter(s => s.active).map(s => s.id);
+    }
+
+    function currentChild() {
+      if (!availableIds().includes(selectedStudent)) selectedStudent = availableIds()[0] || '';
+      return db.students.find(s => s.id === selectedStudent);
+    }
+
+    function points(id, periodId = null) {
+      return db.exp.filter(e => e.studentId === id && (!periodId || e.periodId === periodId)).reduce((n, e) => n + e.amount, 0);
+    }
+
+    // --- KONFIGURASI GOOGLE APPS SCRIPT ---
+const API_URL = "https://script.google.com/macros/s/AKfycbz82foxm1mII_PNzu5NIZZANP-qTulUuaYNVrM9JJuojIHm4hoEJLP3oKotMLBGQuDBkQ/exec"; 
+
+// Fungsi untuk mengambil data dari Google Spreadsheet (Backend)
+async function loadDataFromSpreadsheet() {
+  if (!API_URL || API_URL.includes("Z...")) return; 
+  try {
+    const response = await fetch(API_URL);
+    const result = await response.json();
+    if(result.status === 'success' && result.data) {
+      // Jika Anda ingin data lokal disinkronkan dengan hasil dari spreadsheet
+      // console.log("Data berhasil dimuat dari Spreadsheet", result.data);
+    }
+  } catch(err) {
+    console.error("Gagal memuat database Google Sheets:", err);
+  }
+}
+
+// Fungsi untuk mengirim/menyimpan perubahan data ke Google Spreadsheet (Backend)
+async function syncDataToSpreadsheet(actionType, payload) {
+  if (!API_URL || API_URL.includes("Z...")) return;
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: actionType, data: payload })
+    });
+  } catch(err) {
+    console.error("Gagal menyimpan ke Google Sheets:", err);
+  }
+}
+
+    // --- Render App ---
+    function render() {
+      charts.forEach(c => c.destroy());
+      charts = [];
+      const root = document.getElementById('app');
+      if (!role) {
+        root.innerHTML = accessPage();
+        lucide.createIcons();
+        return;
+      }
+      if (!actor) {
+        root.innerHTML = loginPage();
+        lucide.createIcons();
+        return;
+      }
+      root.innerHTML = shellPage();
+      lucide.createIcons();
+      requestAnimationFrame(drawCharts);
+    }
+
+    function accessPage() {
+      return `<main class="access">
+        <div class="access-inner">
+          <header>
+            ${logo('access-logo')}
+            <div class="mt-5 inline-block rounded-full border border-white/30 px-3 py-1 text-xs font-bold">SD AISYIYAH UNGGULAN SUMBERLAWANG</div>
+            <h1 data-template-id="access-title">SAHABAT</h1>
+            <p data-template-id="access-subtitle" class="font-bold">Sinergi Orang Tua dan Sekolah Pembentuk Anak Hebat</p>
+            <p data-template-id="access-description" class="mt-3 max-w-lg">Bersinergi dalam pembiasaan, berkolaborasi dalam pendidikan, membentuk anak hebat.</p>
+          </header>
+          <div class="access-cards">
+            ${[
+              ['operator', 'shield-check', 'Kelola Sistem dan Data Sekolah', 'Kelola master data, relasi, periode, analytics, laporan, dan audit aktivitas.', 'MASUK SEBAGAI OPERATOR'],
+              ['guru', 'graduation-cap', 'Dampingi Pembinaan Sekolah', 'Catat monitoring sekolah, kehadiran, karakter, validasi, dan perkembangan siswa.', 'MASUK SEBAGAI GURU'],
+              ['parent', 'heart-handshake', 'Dampingi Pembiasaan Anak di Rumah', 'Pantau perkembangan anak, isi pembiasaan harian, dan bangun sinergi bersama Guru.', 'MASUK SEBAGAI ORANG TUA']
+            ].map(([r, icon, title, desc, cta]) => `
+              <article class="access-card">
+                <i class="role-icon" data-lucide="${icon}"></i>
+                <h2>${title}</h2>
+                <p>${desc}</p>
+                <button type="button" class="solid" data-action="enter:${r}">${cta}</button>
+              </article>
+            `).join('')}
+          </div>
+          <footer class="text-xs text-white/80">SAHABAT menghubungkan sekolah dan rumah untuk membangun karakter anak secara konsisten. · SAHABAT MODE</footer>
+        </div>
+      </main>`;
+    }
+
+    function loginPage() {
+      const label = { operator: 'OPERATOR', guru: 'GURU', parent: 'ORANG TUA' }[role];
+      const identities = role === 'operator' ? [['u-op', 'Operator SAHABAT']] : role === 'guru' ? db.teachers.filter(t => t.active && t.username).map(t => [t.id, `${t.name} — ${t.role}`]) : [];
+      const parentLogin = role === 'parent' ? `<div class="field"><label for="student-nis">ID Siswa (NIS)</label><input id="student-nis" name="studentNis" type="text" inputmode="numeric" placeholder="Masukkan NIS siswa yang terdaftar di Operator" autocomplete="off"></div>` : role === 'guru' ? `<div class="field"><label for="guru-username">Username Guru</label><input id="guru-username" name="guruUsername" type="text" placeholder="Masukkan username Guru sesuai data Operator" autocomplete="username" required></div>` : `<div class="field"><label for="demo-identity">Akun ${label} aktif · SAHABAT MODE</label><select id="demo-identity" required>${options(identities, identities[0]?.[0])}</select></div>`;
+
+      return `<main class="login-page">
+        <section class="login-photo">
+          ${logo('hidden')}
+          <img data-template-id="login-photo" loading="lazy" class="photo" src="https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1280" alt="Belajar Bersama">
+          <div class="login-photo-content">
+            ${logo('')}
+            <div>
+              <span class="pill">AKSES ${label} · SAHABAT MODE</span>
+              <h2 class="font-bold text-3xl mt-3" style="font-family:Fraunces,serif">SAHABAT</h2>
+              <p>Sinergi Orang Tua dan Sekolah Pembentuk Anak Hebat</p>
+            </div>
+          </div>
+        </section>
+        <section class="login-right">
+          <div class="login-box">
+            ${btn('← Beranda Akses', 'back')}
+            <h1 data-template-id="login-title">Masuk SAHABAT</h1>
+            <p data-template-id="login-description" class="hint">Pilih profil aktif untuk melanjutkan ke dashboard sesuai hak akses demo.</p>
+            <form id="login-form" class="login-card mt-5">
+              ${parentLogin}
+              <p class="hint mt-3">${role === 'parent' ? 'Masukkan NIS siswa yang terdaftar dan masih aktif di Data Siswa Operator.' : role === 'guru' ? 'Masukkan username Guru yang tersimpan di Data Guru Operator.' : 'Pilih akun SAHABAT yang dikelola Operator untuk melanjutkan.'}</p>
+              <button class="solid w-full mt-4" type="submit">${role === 'parent' ? 'Masuk ke Dashboard Orang Tua' : 'MASUK KE DASHBOARD'}</button>
+            </form>
+            <p class="hint mt-4">Pengelolaan akun dan akses dilakukan melalui sumber data terpusat SAHABAT.</p>
+          </div>
+        </section>
+      </main>`;
+    }
+
+    function shellPage() {
+      const items = menus[role].map(group => `<div class="nav-group">${group[0]}</div>${group.slice(1).map(name => `<button class="nav-item ${view === name ? 'active' : ''}" data-action="view:${name}">${esc(name)}</button>`).join('')}`).join('');
+      const body = moduleBody();
+
+      return `<div class="app-shell">
+        <div id="backdrop" class="backdrop" data-action="close-nav"></div>
+        <aside id="sidebar" class="sidebar">
+          ${logo('side-logo')}
+          <div class="side-title">SAHABAT</div>
+          <div class="side-caption">SD Aisyiyah Unggulan</div>
+          <nav aria-label="Navigasi ${role}">${items}</nav>
+          <div class="sidebar-bottom">${btn('⌂ Beranda Akses', 'logout', 'nav-item')}</div>
+        </aside>
+        <div class="workspace">
+          <header class="topbar">
+            <div class="flex items-center gap-3">
+              ${btn('☰', 'toggle-nav', 'small-btn mobile-menu')}
+              <div>
+                <strong>SAHABAT — SD Aisyiyah Unggulan Sumberlawang</strong>
+                <div class="hint">Selamat datang, ${esc(actor.name)} · ${esc(periodLabel())}</div>
+              </div>
+            </div>
+            <span class="pill">SAHABAT MODE</span>
+          </header>
+          <main class="content ${role === 'operator' && view === 'Dashboard' ? 'operator-dashboard' : ''}">
+            <div class="demo-banner"><b>SAHABAT MODE</b> · Data dan grafik menggunakan sumber data terpusat aplikasi. Backend dan autentikasi produksi memerlukan implementasi lanjutan.</div>
+            <div id="page-notice" aria-live="polite"></div>
+            ${body}
+          </main>
+        </div>
+      </div>
+      ${modal ? modalHtml() : ''}`;
+    }
+
+    function heading(kicker, title, sub = '', actions = '') {
+      return `<div class="flex flex-wrap justify-between items-start gap-3">
+        <div>
+          <div class="eyebrow">${esc(kicker)}</div>
+          <h1 class="page-title">${esc(title)}</h1>
+          <p class="hint">${esc(sub)}</p>
+        </div>
+        <div class="flex gap-2">${actions}</div>
+      </div>`;
+    }
+
+    function stats(id) {
+      const active = db.students.filter(s => s.active).length,
+        school = db.schoolHabits.filter(h => h.verified).length,
+        home = db.homeHabits.filter(h => h.verified).length,
+        total = db.exp.filter(e => !id || e.studentId === id).reduce((a, e) => a + e.amount, 0);
+
+      const vals = role === 'parent' ? [
+        [db.schoolHabits.filter(h => h.studentId === id && h.verified).length, 'Monitoring Sekolah'],
+        [db.homeHabits.filter(h => h.studentId === id && h.verified).length, 'Habit Rumah'],
+        [total, 'Total EXP'],
+        [db.messages.filter(m => m.studentId === id).length, 'Pesan Sinergi']
+      ] : [
+        [role === 'guru' ? teacherIds().length : active, role === 'guru' ? 'Siswa Saya' : 'Siswa Aktif'],
+        [school, 'Monitoring Terisi'],
+        [home, 'Habit Rumah'],
+        [total, 'Total EXP']
+      ];
+
+      return `<div class="stats">
+        ${vals.map(([v, l], i) => `
+          <div class="card stat">
+            <span class="eyebrow">${['♧', '▣', '◉', '♙'][i]}</span>
+            <strong>${v}</strong>
+            <small>${l}</small>
+          </div>
+        `).join('')}
+      </div>`;
+    }
+
+    function childPicker() {
+      return `<div class="field my-3">
+        <label for="child-picker">Ananda yang dipilih</label>
+        <select id="child-picker" class="filter-control">${studentOptions(availableIds())}</select>
+      </div>`;
+    }
+
+    function chartCards() {
+      return `<div class="grid-2">
+        <section class="card">
+          <h2>Karakter dan Pembiasaan</h2>
+          <div class="chart-holder"><canvas id="main-chart" role="img" aria-label="Grafik pembiasaan sekolah dan rumah"></canvas></div>
+        </section>
+        <section class="card">
+          <h2>Tren EXP Mingguan</h2>
+          <div class="chart-holder"><canvas id="trend-chart" role="img" aria-label="Grafik tren EXP"></canvas></div>
+        </section>
+      </div>
+      <p class="hint mt-3">Grafik demo memakai data simulasi lokal, bukan data operasional nyata.</p>`;
+    }
+
+    function operatorFilterPanel() {
+      const year = filters.opYear || '';
+      const periods = db.periods.filter(p => !year || p.yearId === year);
+      const classId = filters.opClass || '';
+      const students = db.students.filter(s => s.active && (!classId || s.classId === classId));
+
+      return `<section class="card operator-filters mt-4">
+        <div class="eyebrow">FILTER DASHBOARD</div>
+        <div class="toolbar">
+          <label class="field">
+            <span>Tahun Ajaran</span>
+            <select id="op-year" class="filter-control">${options([['', 'Semua Tahun'], ...db.years.map(y => [y.id, y.name])], year)}</select>
+          </label>
+          <label class="field">
+            <span>Periode</span>
+            <select id="op-period" class="filter-control">${options([['', 'Semua Periode'], ...periods.map(p => [p.id, p.name])], filters.opPeriod || '')}</select>
+          </label>
+          <label class="field">
+            <span>Kelas</span>
+            <select id="op-class" class="filter-control">${options([['', 'Semua Kelas'], ...db.classes.map(c => [c.id, c.name])], classId)}</select>
+          </label>
+          <label class="field">
+            <span>Nama Siswa</span>
+            <select id="op-student" class="filter-control">${options([['', 'Semua Siswa'], ...students.map(s => [s.id, s.name])], filters.opStudent || '')}</select>
+          </label>
+          ${btn('Reset Filter', 'reset-op-filter', 'small-btn')}
+        </div>
+      </section>`;
+    }
+
+    function operatorRecords() {
+      const ids = filters.opStudent ? [filters.opStudent] : db.students.filter(s => s.active && (!filters.opClass || s.classId === filters.opClass)).map(s => s.id);
+      const periodIds = db.periods.filter(p => (!filters.opYear || p.yearId === filters.opYear) && (!filters.opPeriod || p.id === filters.opPeriod)).map(p => p.id);
+      const match = r => ids.includes(r.studentId) && periodIds.includes(r.periodId);
+      return {
+        school: db.schoolHabits.filter(match),
+        home: db.homeHabits.filter(match),
+        assess: db.assessments.filter(match),
+        ids
+      };
+    }
+
+    function completionBlock(a) {
+      const done = x => x.filter(h => h.status === 'Terlaksana').length;
+      const rows = [
+        [a.school, 'Pembiasaan Sekolah'],
+        [a.home, 'Pembiasaan Rumah']
+      ];
+      const total = rows.reduce((n, [x]) => n + x.length, 0),
+        finished = rows.reduce((n, [x]) => n + done(x), 0);
+
+      if (!total) return `<section class="card mt-4"><h2>Catatan Penyelesaian Pembiasaan</h2><p class="hint">Belum tersedia data pada filter yang dipilih.</p></section>`;
+
+      const pct = Math.round(finished / total * 100);
+      return `<section class="card mt-4">
+        <h2>Catatan Penyelesaian Pembiasaan</h2>
+        <div class="stats">
+          <div class="stat"><strong>${total}</strong><small>Aktivitas direncanakan</small></div>
+          <div class="stat"><strong>${finished}</strong><small>Selesai</small></div>
+          <div class="stat"><strong>${total - finished}</strong><small>Belum selesai</small></div>
+          <div class="stat"><strong>${pct}%</strong><small>Persentase penyelesaian</small></div>
+        </div>
+        <p class="hint">${pct >= 80 ? 'Capaian pembiasaan sudah baik dan konsisten.' : 'Masih ada kendala penyelesaian yang perlu ditindaklanjuti bersama.'}</p>
+      </section>`;
+    }
+
+    function operatorDashboard() {
+      const a = operatorRecords(),
+        count = a.school.length + a.home.length,
+        done = x => x.filter(h => h.status === 'Terlaksana').length,
+        percent = x => x.length ? Math.round(done(x) / x.length * 100) : 0;
+
+      return heading('ANALYTICS / RECAP CENTER', 'Dashboard Operator', 'Monitoring pembiasaan, kehadiran, karakter, dan data terpusat.', btn('+ Tambah Siswa', 'add:students', 'solid')) +
+        operatorFilterPanel() +
+        stats() +
+        completionBlock(a) +
+        `<section class="card mt-4">
+          <h2>Perbandingan Penyelesaian Pembiasaan</h2>
+          ${count ? `
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>KATEGORI</th><th>TOTAL AKTIVITAS</th><th>SELESAI</th><th>BELUM SELESAI</th><th>PERSENTASE</th></tr>
+                </thead>
+                <tbody>
+                  ${[
+                    ['Pembiasaan Sekolah', a.school],
+                    ['Pembiasaan Rumah', a.home],
+                    ['Total Keseluruhan', a.school.concat(a.home)]
+                  ].map(([n, x]) => `
+                    <tr>
+                      <td>${n}</td>
+                      <td>${x.length}</td>
+                      <td>${done(x)}</td>
+                      <td>${x.length - done(x)}</td>
+                      <td><span class="pill">${percent(x)}%</span></td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+            <div class="chart-holder"><canvas id="operator-comparison"></canvas></div>
+          ` : '<p class="hint">Belum tersedia data pada filter yang dipilih.</p>'}
+        </section>
+        <div class="grid-2 mt-4">
+          <section class="card">
+            <h2>Grafik Kehadiran Siswa</h2>
+            <div id="operator-attendance" class="hint">Belum tersedia data pada filter yang dipilih.</div>
+            <div class="chart-holder"><canvas id="attendance-chart"></canvas></div>
+          </section>
+          <section class="card">
+            <h2>Grafik Nilai Karakter Siswa</h2>
+            <div id="operator-character" class="hint">Belum tersedia data pada filter yang dipilih.</div>
+            <div class="chart-holder"><canvas id="character-chart"></canvas></div>
+          </section>
+        </div>
+        <section class="card mt-4">
+          <h2>Ringkasan Parental Habit Tracker</h2>
+          <div id="operator-home-summary" class="hint">Belum tersedia data pada filter yang dipilih.</div>
+          <div class="chart-holder"><canvas id="home-donut"></canvas></div>
+        </section>`;
+    }
+
+    function homeDashboard() {
+      if (role === 'operator') return operatorDashboard();
+      if (role === 'guru') {
+        return heading('RANGKUMAN PEMBINAAN', 'Dashboard Guru', 'Kelas saya, siswa saya, monitoring sekolah, validasi, dan data rumah.') +
+          `<div class="grid-2 mt-4">
+            <section class="card">
+              <div class="eyebrow">IDENTITAS GURU</div>
+              <h2>${esc(actor.name)}</h2>
+              <p class="hint">${esc(actor.role)} · ${esc(db.classes.find(c => c.id === actor.classId)?.name || '')} · Tahun ajaran ${esc(db.years.find(y => y.active)?.name || '—')} · ${esc(activePeriod()?.name || '—')}</p>
+            </section>
+            <section class="card">
+              <div class="eyebrow">ANAK/SISWA YANG DIDAMPINGI</div>
+              <h2>Daftar Siswa · ${teacherIds().length} siswa</h2>
+              <div style="max-height:160px;overflow:auto">
+                ${db.students.filter(s => teacherIds().includes(s.id)).map(s => `<div class="py-1 border-b text-xs">${esc(s.name)}</div>`).join('')}
+              </div>
+            </section>
+          </div>` +
+          stats() +
+          chartCards();
+      }
+
+      const s = currentChild();
+      return heading('PUSAT PROGRES ANANDA', 'Dashboard Orang Tua', 'Ananda Hebat, pembiasaan, dan perkembangan karakter.') +
+        childPicker() +
+        `<div class="grid-2 mb-4">
+          <section class="card">
+            <div class="eyebrow">ANANDA HEBAT</div>
+            <h2>${esc(s?.name || 'Belum ada anak terhubung')}</h2>
+            ${levelProgress(s?.id)}
+          </section>
+          <section class="card">
+            <div class="eyebrow">POIN ANANDA HEBAT / EXP</div>
+            <div class="text-3xl font-extrabold my-2">${points(s?.id)}</div>
+            <p class="hint">EXP dari aktivitas terverifikasi.</p>
+          </section>
+        </div>` +
+        stats(s?.id) +
+        badges(s?.id) +
+        chartCards();
+    }
+
+    function levelProgress(id) {
+      const p = points(id),
+        i = Math.max(0, levels.findLastIndex(l => p >= l[1])),
+        next = levels[i + 1];
+
+      return `<strong>${levels[i][2]} ${levels[i][0]}</strong>
+        <div class="w-full h-2 rounded-full bg-emerald-100 my-3">
+          <div class="h-full rounded-full bg-emerald-500" style="width:${next ? Math.min(100, (p - levels[i][1]) / (next[1] - levels[i][1]) * 100) : 100}%"></div>
+        </div>
+        <p class="hint">${next ? `${p} EXP · ${next[1] - p} EXP lagi menuju ${next[0]}` : `${p} EXP · Level tertinggi tercapai`}</p>`;
+    }
+
+    function badges(id) {
+      const p = points(id);
+      return `<section class="card my-4">
+        <h2>Digital Badge & Reward</h2>
+        <div class="badge-grid">
+          ${levels.map(([name, min, icon]) => `
+            <div class="badge-card ${p < min ? 'locked' : ''}">
+              <span class="badge-medal" aria-hidden="true">${icon}</span>
+              <strong class="text-xs">${name}</strong>
+              <div class="hint">${min} EXP minimum</div>
+              <span class="pill ${p < min ? 'off' : ''}">${p >= min ? 'Terbuka' : 'Terkunci'}</span>
+            </div>
+          `).join('')}
+        </div>
+        <h2 class="mt-5">Riwayat Poin</h2>
+        ${db.exp.filter(e => e.studentId === id).slice().reverse().slice(0, 8).map(e => `
+          <div class="check-row">
+            <span>${esc(e.activity)} · ${esc(e.date)}</span>
+            <strong>+${e.amount}</strong>
+          </div>
+        `).join('') || '<p class="hint">Belum ada EXP terverifikasi.</p>'}
+      </section>`;
+    }
+
+    const entityMap = {
+      'Data Siswa': 'students',
+      'Data Guru': 'teachers',
+      'Data Orang Tua/Wali': 'parents',
+      'Data Kelas': 'classes',
+      'Relasi Keluarga': 'links'
+    };
+
+    function entityName(type, row) {
+      return type === 'links' ? `${db.students.find(s => s.id === row.studentId)?.name || '—'} ↔ ${db.parents.find(p => p.id === row.parentId)?.name || '—'}` : row.name;
+    }
+
+    function entityTable(type) {
+      const labels = { students: 'Siswa', teachers: 'Guru', parents: 'Orang Tua/Wali', classes: 'Kelas', links: 'Relasi Keluarga' },
+        title = 'Data ' + labels[type];
+      let rows = db[type]
+        .filter(r => !filters.search || entityName(type, r).toLowerCase().includes(filters.search.toLowerCase()))
+        .filter(r => !filters.status || String(r.active) !== String(filters.status === 'off'))
+        .filter(r => !filters.classId || r.classId === filters.classId);
+
+      return heading('DATA CENTER', title, 'Kelola data terpusat yang terhubung di seluruh aplikasi.', btn('+ Tambah Data', 'add:' + type, 'solid')) +
+        `<div class="card mt-4">
+          <div class="toolbar">
+            <label class="sr-only" for="search-entity">Cari nama atau identitas</label>
+            <input id="search-entity" class="filter-control flex-1" placeholder="Cari nama atau identitas..." value="${esc(filters.search || '')}">
+            <label class="sr-only" for="status-filter">Status</label>
+            <select id="status-filter" class="filter-control">${options([['', 'Semua Status'], ['on', 'Aktif'], ['off', 'Tidak Aktif']], filters.status || '')}</select>
+            ${type === 'students' || type === 'teachers' ? `
+              <label class="sr-only" for="class-filter">Kelas</label>
+              <select id="class-filter" class="filter-control">${options([['', 'Semua Kelas'], ...db.classes.map(c => [c.id, c.name])], filters.classId || '')}</select>
+            ` : ''}
+            ${btn('Hapus Filter', 'clear-filter')}
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>NAMA / RELASI</th><th>INFORMASI</th><th>STATUS</th><th>TINDAKAN</th></tr>
+              </thead>
+              <tbody>
+                ${rows.map(r => `
+                  <tr>
+                    <td><strong>${esc(entityName(type, r))}</strong></td>
+                    <td>${esc(type === 'students' ? `${r.nis} · ${db.classes.find(c => c.id === r.classId)?.name || 'Tanpa kelas'}` : type === 'teachers' ? `${db.classes.find(c => c.id === r.classId)?.name || '—'} · ${r.role} · ${r.username}` : type === 'parents' ? r.role : type === 'classes' ? 'Wali: ' + (db.teachers.find(t => t.id === r.teacherId)?.name || '—') : 'Orang tua ↔ siswa')}</td>
+                    <td><span class="pill ${r.active === false ? 'off' : ''}">${r.active === false ? 'Tidak Aktif' : 'Aktif'}</span></td>
+                    <td class="whitespace-nowrap">
+                      ${btn('Detail', `detail:${type}:${r.id}`)} 
+                      ${btn('Edit', `edit:${type}:${r.id}`)} 
+                      ${type !== 'links' ? btn(r.active === false ? 'Aktifkan' : 'Nonaktifkan', `toggle:${type}:${r.id}`) : ''} 
+                      ${btn('Hapus', `delete:${type}:${r.id}`, 'small-btn danger')}
+                    </td>
+                  </tr>
+                `).join('') || '<tr><td colspan="4">Tidak ada data untuk filter ini.</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+    }
+
+    function periodPage() {
+      return heading('DATA CENTER', 'Tahun Ajaran & Periode', 'Satu periode utama aktif; arsip lama tetap terlihat.', btn('+ Tambah Tahun', 'add:years', 'small-btn') + ' ' + btn('+ Tambah Periode', 'add:periods', 'solid')) +
+        `<div class="grid-2 mt-4">
+          <section class="card">
+            <h2>Tahun Ajaran</h2>
+            ${db.years.map(y => `<div class="check-row"><strong>${esc(y.name)}</strong><span class="pill ${y.active ? '' : 'off'}">${y.active ? 'Aktif' : 'Arsip'}</span></div>`).join('')}
+          </section>
+          <section class="card">
+            <h2>Periode · ${esc(periodLabel())}</h2>
+            ${db.periods.map(p => `
+              <div class="check-row">
+                <span>${esc(db.years.find(y => y.id === p.yearId)?.name)} / ${esc(p.name)} <span class="pill ${p.active ? '' : 'off'}">${p.active ? 'Aktif' : 'Tidak Aktif'}</span></span>
+                ${!p.active ? btn('Jadikan Aktif', 'activate:' + p.id) : ''}
+              </div>
+            `).join('')}
+          </section>
+        </div>`;
+    }
+
+    function habitPage(kind) {
+      const school = kind === 'school',
+        ids = availableIds(),
+        s = currentChild();
+
+      return heading(school ? 'PEMBINAAN SEKOLAH' : 'PEMBIASAAN RUMAH', school ? 'School Habit Check' : 'Habit Tracker Rumah', `Periode aktif: ${periodLabel()}. ${school ? 'EXP diberikan setelah guru memverifikasi.' : 'Catatan tersimpan dan dapat diverifikasi guru.'}`) +
+        `<section class="card mt-4">
+          <form id="habit-form" data-kind="${kind}" class="space-y-4">
+            <div class="form-grid">
+              <div class="field">
+                <label for="habit-student">Nama anak</label>
+                <select id="habit-student" name="studentId" required ${school ? '' : 'disabled'}>${studentOptions(ids)}</select>
+                ${school ? '<span class="hint">Hanya siswa kelas yang ditugaskan.</span>' : `<input type="hidden" name="studentId" value="${esc(s?.id || '')}">`}
+              </div>
+              <div class="field">
+                <label for="habit-date">Tanggal aktivitas</label>
+                <input type="date" id="habit-date" name="date" value="${today()}" required>
+              </div>
+            </div>
+            <p class="hint">Status setiap aktivitas: Terlaksana, Belum Terlaksana, atau Tidak Berlaku.</p>
+            ${(school ? schoolActivities : homeActivities).map((name, i) => `
+              <div class="check-row">
+                <label for="habit-${i}">${esc(name)} ${weights[name] ? `· +${weights[name]} EXP` : ''}</label>
+                <select id="habit-${i}" name="a${i}" class="filter-control" aria-label="Status ${esc(name)}">
+                  <option value="Belum Terlaksana">Belum Terlaksana</option>
+                  <option value="Terlaksana">Terlaksana</option>
+                  <option value="Tidak Berlaku">Tidak Berlaku</option>
+                </select>
+              </div>
+            `).join('')}
+            <div class="field">
+              <label for="habit-note">${school ? 'Catatan guru' : 'Catatan orang tua'}</label>
+              <textarea id="habit-note" name="note" placeholder="Catatan tambahan (opsional)"></textarea>
+            </div>
+            <button type="submit" class="solid">${school ? 'Simpan School Habit Check' : 'Verifikasi & Simpan'}</button>
+          </form>
+        </section>
+        <section class="card mt-4">
+          <h2>Riwayat & Status Verifikasi</h2>
+          ${habitHistory(kind)}
+        </section>`;
+    }
+
+    function habitHistory(kind) {
+      let data = (kind === 'school' ? db.schoolHabits : db.homeHabits).filter(h => availableIds().includes(h.studentId));
+      if (role === 'parent') data = data.filter(h => h.studentId === selectedStudent);
+
+      return `<div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>TANGGAL / SISWA</th><th>AKTIVITAS</th><th>STATUS</th><th>VERIFIKASI</th></tr>
+          </thead>
+          <tbody>
+            ${data.slice().reverse().slice(0, 35).map(h => `
+              <tr>
+                <td>${esc(h.date)}<br>${esc(db.students.find(s => s.id === h.studentId)?.name)}</td>
+                <td>${esc(h.activity)} · ${esc(h.status)}</td>
+                <td>${esc(h.note || '—')}</td>
+                <td>${h.verified ? '<span class="pill">Terverifikasi</span>' : role === 'guru' ? btn('Verifikasi', `verify:${kind}:${h.id}`) : '<span class="pill off">Menunggu guru</span>'}</td>
+              </tr>
+            `).join('') || '<tr><td colspan="4">Belum ada aktivitas.</td></tr>'}
+          </tbody>
+        </table>
+      </div>`;
+    }
+
+    function assessmentPage() {
+      return heading('PEMBINAAN KARAKTER', 'Penilaian Karakter', 'Skala 1–4 untuk Religiusitas, Kedisiplinan, dan Kemandirian.') +
+        `<section class="card mt-4">
+          <form id="assessment-form" class="form-grid">
+            <div class="field">
+              <label for="assess-student">Siswa</label>
+              <select id="assess-student" name="studentId" required>${studentOptions(teacherIds())}</select>
+            </div>
+            <div class="field">
+              <label for="assess-date">Tanggal</label>
+              <input id="assess-date" name="date" type="date" value="${today()}" required>
+            </div>
+            ${['Religiusitas', 'Kedisiplinan', 'Kemandirian'].map((a, i) => `
+              <div class="field">
+                <label for="score-${i}">${a}</label>
+                <select id="score-${i}" name="score${i}">
+                  ${[1, 2, 3, 4].map(n => `<option value="${n}">${n}</option>`).join('')}
+                </select>
+              </div>
+            `).join('')}
+            <div class="field full">
+              <label for="assess-note">Catatan</label>
+              <textarea id="assess-note" name="note"></textarea>
+            </div>
+            <div class="field full">
+              <label for="assess-follow">Tindak lanjut</label>
+              <textarea id="assess-follow" name="follow"></textarea>
+            </div>
+            <button class="solid" type="submit">Simpan Penilaian</button>
+          </form>
+        </section>
+        <section class="card mt-4">
+          <h2>Riwayat Penilaian</h2>
+          ${db.assessments.filter(a => teacherIds().includes(a.studentId)).slice().reverse().map(a => `
+            <div class="check-row">
+              <span>${esc(a.date)} · ${esc(db.students.find(s => s.id === a.studentId)?.name)} · Religiusitas ${a.scores[0]} / Kedisiplinan ${a.scores[1]} / Kemandirian ${a.scores[2]}</span>
+            </div>
+          `).join('') || '<p class="hint">Belum ada penilaian.</p>'}
+        </section>`;
+    }
+
+    function messagesPage() {
+      const s = currentChild(),
+        ids = availableIds();
+      let msgs = db.messages.filter(m => m.studentId === selectedStudent && (role === 'guru' ? m.teacherId === actor.id : role === 'parent' ? m.parentId === actor.id : true));
+      const linkedParents = db.links.filter(l => l.studentId === selectedStudent).map(l => db.parents.find(p => p.id === l.parentId)).filter(Boolean);
+
+      return heading('KOMUNIKASI PRIVAT', view, 'Percakapan dua arah antara guru dan orang tua yang terhubung.') +
+        `<section class="card mt-4">
+          <div class="field">
+            <label for="message-child">Pilih siswa</label>
+            <select id="message-child">${studentOptions(ids)}</select>
+          </div>
+          <div class="mt-4 max-h-72 overflow-auto" aria-live="polite">
+            ${msgs.map(m => `
+              <div class="message ${m.senderId === actor.id ? 'mine' : ''}">
+                <strong>${esc(m.senderName)}</strong> · ${esc(m.date)}
+                <p class="mt-1">${esc(m.text)}</p>
+              </div>
+            `).join('') || '<p class="hint">Belum ada percakapan untuk anak ini.</p>'}
+          </div>
+          <form id="message-form" class="form-grid mt-4">
+            ${role === 'guru' ? `
+              <div class="field">
+                <label for="message-recipient">Penerima orang tua</label>
+                <select id="message-recipient" required>${options(linkedParents.map(p => [p.id, p.name + ' · ' + p.role]), linkedParents[0]?.id)}</select>
+              </div>
+            ` : ''}
+            <div class="field full">
+              <label for="message-text">Pesan privat</label>
+              <textarea id="message-text" required maxlength="1000" placeholder="Tulis pesan untuk keluarga atau guru..."></textarea>
+            </div>
+            <button class="solid" type="submit">Kirim Pesan</button>
+          </form>
+        </section>`;
+    }
+
+    function analytics() {
+      return heading('MONITORING & LAPORAN', 'Analytics / Recap Center', 'Grafik demo dari data simulasi lokal, bukan data operasional nyata.') +
+        `<div class="card mt-4">
+          <div class="toolbar">
+            <label class="field">Tahun ajaran<select id="analytics-year">${options([['', 'Semua Tahun'], ...db.years.map(y => [y.id, y.name])], filters.year || '')}</select></label>
+            <label class="field">Periode<select id="analytics-period">${options([['', 'Semua Periode'], ...db.periods.map(p => [p.id, p.name])], filters.period || '')}</select></label>
+            <label class="field">Kelas<select id="analytics-class">${options([['', 'Semua Kelas'], ...db.classes.map(c => [c.id, c.name])], filters.analyticsClass || '')}</select></label>
+            <label class="field">Nama anak<select id="analytics-student">${options([['', 'Semua Anak'], ...db.students.map(s => [s.id, s.name])], filters.analyticsStudent || '')}</select></label>
+          </div>
+          <div id="analytics-summary"></div>
+        </div>
+        <div class="mt-4">${chartCards()}</div>
+        <div class="card mt-4">
+          <h2>Rekap karakter, kehadiran, sekolah, rumah dan EXP</h2>
+          <div id="analytics-details"></div>
+        </div>`;
+    }
+
+    function auditPreview() {
+      return db.audit.slice(0, 7).map(a => `<div class="check-row"><span>${esc(a.action)}</span><span class="hint">${esc(a.time)}</span></div>`).join('') || '<p class="hint">Belum ada aktivitas pada sesi SAHABAT MODE ini.</p>';
+    }
+
+    function teacherReport() {
+      const years = options([['', 'Semua Tahun'], ...db.years.map(y => [y.id, y.name])], filters.reportYear || '');
+      const periods = options([['', 'Semua Periode'], ...db.periods.map(p => [p.id, p.name])], filters.reportPeriod || '');
+      const classes = options([['', 'Semua Kelas'], ...db.classes.map(c => [c.id, c.name])], filters.reportClass || '');
+      const students = db.students.filter(s => teacherIds().includes(s.id) && (!filters.reportClass || s.classId === filters.reportClass));
+      const done = s => db.schoolHabits.some(h => h.studentId === s.id && h.verified && (!filters.reportPeriod || h.periodId === filters.reportPeriod) && (!filters.reportYear || db.periods.find(p => p.id === h.periodId)?.yearId === filters.reportYear));
+
+      return heading('LAPORAN', 'Laporan Pembinaan', 'Monitoring pengisian siswa berdasarkan sumber data pusat.') +
+        `<section class="card mt-4">
+          <div class="toolbar">
+            <label class="field">Tahun Ajaran<select id="report-year">${years}</select></label>
+            <label class="field">Periode<select id="report-period">${periods}</select></label>
+            <label class="field">Kelas<select id="report-class">${classes}</select></label>
+          </div>
+          <div class="stats">
+            <div class="card stat"><strong>${students.filter(done).length}</strong><small>Sudah Mengisi</small></div>
+            <div class="card stat"><strong>${students.filter(s => !done(s)).length}</strong><small>Belum Mengisi</small></div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>No.</th><th>Nama Anak</th><th>NIS</th><th>Kelas</th><th>Status Pengisian</th><th>Periode</th></tr>
+              </thead>
+              <tbody>
+                ${students.map((s, i) => {
+                  const p = filters.reportPeriod ? db.periods.find(x => x.id === filters.reportPeriod) : activePeriod();
+                  return `<tr>
+                    <td>${i + 1}</td>
+                    <td><strong>${esc(s.name)}</strong></td>
+                    <td>${esc(s.nis)}</td>
+                    <td>${esc(db.classes.find(c => c.id === s.classId)?.name || '—')}</td>
+                    <td><span class="pill ${done(s) ? '' : 'off'}">${done(s) ? 'Sudah Mengisi' : 'Belum Mengisi'}</span></td>
+                    <td>${esc(p ? `${db.years.find(y => y.id === p.yearId)?.name || ''} / ${p.name}` : '—')}</td>
+                  </tr>`;
+                }).join('') || '<tr><td colspan="6">Tidak ada siswa untuk filter ini.</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        </section>`;
+    }
+
+    function moduleBody() {
+      if ((role === 'operator' && view === 'Dashboard') || ((role === 'guru' || role === 'parent') && view === 'Beranda')) return homeDashboard();
+
+      if (role === 'operator') {
+        if (entityMap[view]) return entityTable(entityMap[view]);
+        if (view === 'Tahun Ajaran & Periode') return periodPage();
+        if (view === 'Analytics / Recap Center') return analytics();
+        if (view === 'Audit Log') return heading('MONITORING', 'Audit Log', 'Aktivitas penting pada sesi demo ini.') + `<section class="card mt-4">${auditPreview()}</section>`;
+      }
+
+      if (role === 'guru') {
+        if (view === 'Kelas Saya & Siswa Saya') return heading('KELAS SAYA', 'Kelas Saya & Siswa Saya', actor.name) + `<section class="card mt-4"><h2>${esc(db.classes.find(c => c.id === actor.classId)?.name || '')}</h2>${db.students.filter(s => teacherIds().includes(s.id)).map(s => `<div class="check-row">${esc(s.name)} <span class="pill">${points(s.id)} EXP</span></div>`).join('')}</section>`;
+        if (view === 'School Habit Check' || view === 'Kehadiran') return habitPage('school');
+        if (view === 'Penilaian Karakter') return assessmentPage();
+        if (view === 'Validasi') return heading('PEMBINAAN SEKOLAH', 'Validasi', 'Verifikasi aktivitas sebelum EXP diberikan.') + `<section class="card mt-4"><h2>Menunggu Verifikasi</h2>${habitHistory('school')}${habitHistory('home')}</section>`;
+      }
+
+      if (role === 'parent') {
+        if (view === 'Profil Ananda') return heading('IDENTITAS ANANDA', 'Profil Ananda', 'Hanya anak yang terhubung dengan akun demo ini.') + childPicker() + `<section class="card"><h2>${esc(currentChild()?.name || 'Belum ada anak')}</h2><p class="hint">NIS: ${esc(currentChild()?.nis || '—')} · ${esc(db.classes.find(c => c.id === currentChild()?.classId)?.name || '—')}</p>${levelProgress(selectedStudent)}</section>` + badges(selectedStudent);
+        if (view === 'Habit Tracker Rumah') return habitPage('home');
+      }
+
+      if (view === 'Catatan Sinergi' || view === 'Buku Penghubung') return messagesPage();
+      if (view === 'Grafik Perkembangan') return heading('PERKEMBANGAN', 'Grafik Perkembangan', 'Tren aktivitas dan EXP dari sumber demo bersama.') + (role === 'parent' ? childPicker() : '') + `<div class="mt-4">${chartCards()}</div>` + (role === 'parent' ? badges(selectedStudent) : '');
+      if (view === 'Laporan') {
+        if (role === 'guru') return teacherReport();
+        return heading('LAPORAN', 'Laporan Pembinaan', 'Ringkasan aktivitas pada sesi SAHABAT MODE.') + stats(role === 'parent' ? selectedStudent : null) + `<section class="card"><h2>Ringkasan</h2><p class="hint">Aktivitas sekolah terverifikasi: ${db.schoolHabits.filter(h => h.verified && availableIds().includes(h.studentId)).length}. Aktivitas rumah terverifikasi: ${db.homeHabits.filter(h => h.verified && availableIds().includes(h.studentId)).length}. Penilaian karakter: ${db.assessments.filter(a => availableIds().includes(a.studentId)).length}.</p></section>`;
+      }
+
+      return homeDashboard();
+    }
+
+    function modalHtml() {
+      const { mode, type, id } = modal,
+        row = id ? db[type]?.find(r => r.id === id) : null;
+
+      if (mode === 'delete') return `<div class="overlay"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading"><h2 id="modal-heading" class="font-extrabold text-xl">Hapus data demo?</h2><p class="my-4">Hapus ${esc(entityName(type, row))}? Relasi terkait juga dapat terpengaruh.</p>${btn('Batal', 'close-modal')} ${btn('Ya, hapus', `confirm-delete:${type}:${id}`, 'solid')}</section></div>`;
+      if (mode === 'detail') return `<div class="overlay"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading"><h2 id="modal-heading" class="font-extrabold text-xl">Detail ${esc(entityName(type, row))}</h2><div class="my-4">${Object.entries(row).filter(([k]) => !['id'].includes(k)).map(([k, v]) => `<div class="check-row"><strong>${esc(k)}</strong><span>${esc(v)}</span></div>`).join('')}</div>${btn('Tutup', 'close-modal')}</section></div>`;
+
+      const f = (name, label, value = '', required = true, typeInput = 'text') => `<div class="field"><label for="form-${name}">${label}</label><input id="form-${name}" name="${name}" type="${typeInput}" value="${esc(value)}" ${required ? 'required' : ''}></div>`;
+      const sel = (name, label, items, value) => `<div class="field"><label for="form-${name}">${label}</label><select id="form-${name}" name="${name}" required>${options(items, value)}</select></div>`;
+
+      let fields = '';
+      if (type === 'students') fields = f('name', 'Nama siswa', row?.name) + f('nis', 'NIS', row?.nis) + f('nisn', 'NISN', row?.nisn) + sel('gender', 'L/P', [['L', 'L'], ['P', 'P']], row?.gender) + sel('classId', 'Kelas', db.classes.filter(c => c.active).map(c => [c.id, c.name]), row?.classId);
+      if (type === 'teachers') fields = f('name', 'Nama Guru', row?.name) + f('nip', 'NIP/NUPTK (opsional)', row?.nip || '', false) + sel('role', 'Jabatan', [['Wali Kelas', 'Wali Kelas'], ['Wali Pendamping', 'Wali Pendamping']], row?.role) + sel('classId', 'Kelas yang diampu', db.classes.map(c => [c.id, c.name]), row?.classId) + f('username', 'Username (wajib)', row?.username) + f('password', 'Atur/reset kredensial (opsional)', '', false, 'password') + sel('active', 'Status Akun', [['true', 'Aktif'], ['false', 'Tidak Aktif']], String(row?.active !== false)) + `<p class="hint full">Password tidak ditampilkan. Kosongkan untuk mempertahankan kredensial yang ada.</p>`;
+      if (type === 'parents') fields = f('name', 'Nama orang tua', row?.name) + f('username', 'Username demo', row?.username) + sel('role', 'Peran', [['Ayah', 'Ayah'], ['Ibu', 'Ibu'], ['Wali', 'Wali']], row?.role) + (!row ? sel('studentId', 'Hubungkan ke anak', db.students.map(s => [s.id, s.name]), '') : '');
+      if (type === 'classes') fields = f('name', 'Nama kelas', row?.name) + sel('teacherId', 'Wali kelas', db.teachers.map(t => [t.id, t.name]), row?.teacherId);
+      if (type === 'links') fields = sel('studentId', 'Siswa', db.students.map(s => [s.id, s.name]), row?.studentId) + sel('parentId', 'Orang tua', db.parents.map(p => [p.id, p.name]), row?.parentId);
+      if (type === 'years') fields = f('name', 'Tahun ajaran, mis. 2027/2028', row?.name);
+      if (type === 'periods') fields = f('name', 'Nama periode', row?.name) + sel('yearId', 'Tahun ajaran', db.years.map(y => [y.id, y.name]), row?.yearId);
+
+      return `<div class="overlay"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading"><h2 id="modal-heading" class="font-extrabold text-xl mb-4">${mode === 'add' ? 'Tambah' : 'Edit'} Data Demo</h2><form id="entity-form" class="form-grid">${fields}<div class="full flex gap-2 mt-2"><button class="solid" type="submit">Simpan</button>${btn('Batal', 'close-modal')}</div></form></section></div>`;
+    }
+
+    function filteredAnalytics() {
+      const ids = db.students.filter(s => (!filters.analyticsClass || s.classId === filters.analyticsClass) && (!filters.analyticsStudent || s.id === filters.analyticsStudent)).map(s => s.id);
+      const ps = db.periods.filter(p => (!filters.period || p.id === filters.period) && (!filters.year || p.yearId === filters.year)).map(p => p.id);
+      const match = r => ids.includes(r.studentId) && ps.includes(r.periodId);
+      return { ids, school: db.schoolHabits.filter(match), home: db.homeHabits.filter(match), exp: db.exp.filter(match), assess: db.assessments.filter(match) };
+    }
+
+    function drawCharts() {
+      if (!window.Chart) return;
+      if (role === 'operator' && view === 'Dashboard') {
+        const a = operatorRecords(),
+          done = x => x.filter(h => h.status === 'Terlaksana').length;
+        const make = (id, type, labels, data, colors) => {
+          const el = document.getElementById(id);
+          if (el) charts.push(new Chart(el, { type, data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: colors, borderWidth: 1 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: type === 'doughnut' } } } }));
+        };
+        make('operator-comparison', 'bar', ['Sekolah', 'Rumah'], [a.school.length ? Math.round(done(a.school) / a.school.length * 100) : 0, a.home.length ? Math.round(done(a.home) / a.home.length * 100) : 0], ['#219c91', '#ef9b15']);
+        const att = a.school.filter(h => h.activity === 'Kehadiran'),
+          attEl = document.getElementById('operator-attendance');
+        if (attEl && att.length) attEl.textContent = `Hadir ${att.filter(h => h.status === 'Terlaksana').length} · Belum tercatat ${Math.max(0, a.ids.length - att.length)}`;
+        const av = a.assess,
+          character = document.getElementById('operator-character');
+        if (character && av.length) character.textContent = `${av.length} penilaian tersimpan · Religiusitas ${average(av, 0)} · Kedisiplinan ${average(av, 1)} · Kemandirian ${average(av, 2)}`;
+        make('character-chart', 'bar', ['Religiusitas', 'Kedisiplinan', 'Kemandirian'], [average(av, 0), average(av, 1), average(av, 2)], ['#219c91', '#40ab7c', '#58a7a0']);
+        const homeDone = done(a.home),
+          homeEl = document.getElementById('operator-home-summary');
+        if (homeEl && a.home.length) homeEl.textContent = `Total aktivitas rumah ${a.home.length} · Selesai ${homeDone} · Belum selesai ${a.home.length - homeDone} · Penyelesaian ${Math.round(homeDone / a.home.length * 100)}%`;
+        make('home-donut', 'doughnut', ['Aktivitas Selesai', 'Aktivitas Belum Selesai', 'Aktivitas Belum Tercatat'], [homeDone, Math.max(0, a.home.length - homeDone), 0], ['#219c91', '#ef9b15', '#9ca3af']);
+        return;
+      }
+      let ids = role === 'parent' ? [selectedStudent] : role === 'guru' ? teacherIds() : db.students.map(s => s.id);
+      let sch = db.schoolHabits.filter(h => ids.includes(h.studentId) && h.verified),
+        home = db.homeHabits.filter(h => ids.includes(h.studentId) && h.verified),
+        exp = db.exp.filter(e => ids.includes(e.studentId)),
+        ass = db.assessments.filter(a => ids.includes(a.studentId));
+      if (view === 'Analytics / Recap Center') {
+        const a = filteredAnalytics();
+        ids = a.ids;
+        sch = a.school.filter(h => h.verified);
+        home = a.home.filter(h => h.verified);
+        exp = a.exp;
+        ass = a.assess;
+        const summary = document.getElementById('analytics-summary');
+        if (summary) summary.innerHTML = `<div class="stats" style="margin-bottom:0">${[[ids.length, 'Siswa'], [sch.length, 'Sekolah'], [home.length, 'Rumah'], [exp.reduce((n, e) => n + e.amount, 0), 'EXP']].map(([v, l]) => `<div class="stat border rounded-xl"><strong>${v}</strong><small>${l}</small></div>`).join('')}</div>`;
+        const details = document.getElementById('analytics-details');
+        if (details) details.innerHTML = `<p class="hint">Religiusitas: ${average(ass, 0)} / 4 · Kedisiplinan: ${average(ass, 1)} / 4 · Kemandirian: ${average(ass, 2)} / 4 · Kehadiran: ${sch.filter(h => h.activity === 'Kehadiran').length} · Keterlaksanaan: ${Math.round(100 * (sch.length + home.length) / Math.max(1, a.school.length + a.home.length))}%</p>`;
+      }
+      Chart.defaults.font.family = 'DM Sans';
+      Chart.defaults.color = '#567b74';
+      const main = document.getElementById('main-chart');
+      if (main) charts.push(new Chart(main, { type: 'bar', data: { labels: ['Religiusitas', 'Kedisiplinan', 'Kemandirian', 'Sekolah', 'Rumah', 'Kehadiran', 'EXP'], datasets: [{ label: 'Rekap demo', data: [0, 1, 2].map(i => Number(average(ass, i))).concat([sch.length, home.length, sch.filter(h => h.activity === 'Kehadiran').length, exp.reduce((n, e) => n + e.amount, 0)]), backgroundColor: ['#219c91', '#219c91', '#219c91', '#ef9b15', '#40ab7c', '#58a7a0', '#136d69'], borderRadius: 5 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } }));
+      const trend = document.getElementById('trend-chart');
+      if (trend) {
+        const dates = Array.from({ length: 7 }, (_, i) => {
+          const d = new Date();
+          d.setDate(d.getDate() - 6 + i);
+          return d.toISOString().slice(0, 10);
+        });
+        charts.push(new Chart(trend, { type: 'line', data: { labels: dates.map(d => d.slice(5)), datasets: [{ label: 'EXP harian', data: dates.map(d => exp.filter(e => e.date === d).reduce((n, e) => n + e.amount, 0)), borderColor: '#0b7b74', backgroundColor: '#b6e7d8', fill: true, tension: .3 }] }, options: { responsive: true, maintainAspectRatio: false } }));
+      }
+    }
+
+    function average(a, i) {
+      return a.length ? (a.reduce((n, x) => n + Number(x.scores[i]), 0) / a.length).toFixed(1) : '0.0';
+    }
+
+    function award(h, source) {
+      if (h.status !== 'Terlaksana') return;
+      const key = `${source}:${h.studentId}:${h.periodId}:${h.date}:${h.activity}`;
+      if (db.exp.some(e => e.key === key)) return;
+      const amount = weights[h.activity] || 5;
+      db.exp.push({ id: uid(), key, studentId: h.studentId, periodId: h.periodId, date: h.date, activity: h.activity, source, amount });
+    }
+
+    function verify(kind, id) {
+      const h = (kind === 'school' ? db.schoolHabits : db.homeHabits).find(x => x.id === id);
+      if (!h || h.verified || !teacherIds().includes(h.studentId)) return toast('Akses ditolak atau aktivitas sudah diverifikasi.', true);
+      h.verified = true;
+      award(h, kind);
+      log('Verifikasi ' + h.activity + ' untuk ' + db.students.find(s => s.id === h.studentId)?.name);
+      toast('Aktivitas diverifikasi; EXP diperbarui sekali.');
+      render();
+    }
+
+    function saveEntity(form) {
+      const { type, id } = modal,
+        old = id ? db[type].find(x => x.id === id) : null,
+        data = Object.fromEntries(new FormData(form));
+      for (const k in data) data[k] = String(data[k]).trim();
+
+      if (Object.entries(data).some(([k, x]) => !x && !['nip', 'password'].includes(k))) return toast('Lengkapi seluruh kolom wajib.', true);
+      if (type === 'students') {
+        if (db.students.some(x => x.id !== id && (x.nis === data.nis || x.nisn === data.nisn))) return toast('NIS atau NISN sudah digunakan.', true);
+        if (!db.classes.some(c => c.id === data.classId)) return toast('Siswa harus terhubung ke kelas.', true);
+      }
+      if (type === 'teachers' && !data.username) return toast('Username Guru wajib diisi.', true);
+      if (['teachers', 'parents'].includes(type) && db.users.some(u => u.username === data.username && u.refId !== id)) return toast('Username sudah digunakan oleh akun lain.', true);
+      if (type === 'years' && db.years.some(y => y.id !== id && y.name === data.name)) return toast('Tahun ajaran sudah ada.', true);
+      if (type === 'parents' && !old && !data.studentId) return toast('Orang tua harus terhubung ke anak.', true);
+      if (type === 'links' && db.links.some(l => l.id !== id && l.parentId === data.parentId && l.studentId === data.studentId)) return toast('Relasi sudah ada.', true);
+
+      if (type === 'teachers') {
+        data.active = data.active !== 'false';
+        if (!data.password) delete data.password;
+        else {
+          data.passwordConfigured = true;
+          delete data.password;
+        }
+      }
+
+      if (old) Object.assign(old, data);
+      else {
+        const obj = { ...data, id: uid(), active: true };
+        db[type].push(obj);
+        if (type === 'parents') {
+          db.links.push({ id: uid(), parentId: obj.id, studentId: data.studentId });
+          delete obj.studentId;
+        }
+      }
+
+      if (type === 'teachers' || type === 'parents') {
+        const record = db[type].find(x => x.id === (old?.id || db[type].at(-1).id));
+        let u = db.users.find(u => u.refId === record.id);
+        if (u) u.username = record.username;
+        else db.users.push({ id: uid(), refId: record.id, username: record.username, role: type === 'parents' ? 'parent' : 'guru' });
+      }
+
+      log((old ? 'Edit ' : 'Tambah ') + type);
+      modal = null;
+      toast('Data berhasil disimpan.');
+      render();
+    }
+
+    // --- Event Listeners ---
+    document.addEventListener('click', e => {
+      const button = e.target.closest('[data-action]');
+      if (!button) return;
+      const action = button.dataset.action,
+        [verb, type, id] = action.split(':');
+
+      if (verb === 'enter') {
+        role = type;
+        actor = null;
+        render();
+        return;
+      }
+      if (action === 'back' || action === 'logout') {
+        role = null;
+        actor = null;
+        view = '';
+        modal = null;
+        render();
+        return;
+      }
+      if (action === 'toggle-nav') {
+        document.getElementById('sidebar')?.classList.toggle('open');
+        document.getElementById('backdrop')?.classList.toggle('open');
+        return;
+      }
+      if (action === 'close-nav') {
+        document.getElementById('sidebar')?.classList.remove('open');
+        button.classList.remove('open');
+        return;
+      }
+      if (verb === 'view') {
+        view = type;
+        filters = {};
+        render();
+        return;
+      }
+      if (action === 'close-modal') {
+        modal = null;
+        render();
+        return;
+      }
+      if (action === 'clear-filter') {
+        filters = {};
+        render();
+        return;
+      }
+      if (action === 'reset-op-filter') {
+        filters.opYear = '';
+        filters.opPeriod = '';
+        filters.opClass = '';
+        filters.opStudent = '';
+        render();
+        return;
+      }
+      if (['add', 'edit', 'detail', 'delete'].includes(verb)) {
+        modal = { mode: verb, type, id };
+        render();
+        return;
+      }
+      if (verb === 'verify') {
+        verify(type, id);
+        return;
+      }
+      if (verb === 'activate') {
+        db.periods.forEach(p => p.active = p.id === type);
+        db.years.forEach(y => y.active = y.id === db.periods.find(p => p.id === type)?.yearId);
+        log('Mengaktifkan periode ' + periodLabel());
+        toast('Periode aktif diperbarui.');
+        render();
+        return;
+      }
+      if (verb === 'toggle') {
+        const item = db[type].find(r => r.id === id);
+        if (!item) return;
+        item.active = !item.active;
+        log(`${item.active ? 'Aktifkan' : 'Nonaktifkan'} ${type}: ${entityName(type, item)}`);
+        toast('Status diperbarui.');
+        render();
+        return;
+      }
+      if (verb === 'confirm-delete') {
+        const item = db[type].find(r => r.id === id);
+        if (!item) return;
+        db[type] = db[type].filter(r => r.id !== id);
+        if (type === 'students') db.links = db.links.filter(l => l.studentId !== id);
+        if (type === 'parents') db.links = db.links.filter(l => l.parentId !== id);
+        log('Hapus ' + type + ': ' + entityName(type, item));
+        modal = null;
+        toast('Data dihapus.');
+        render();
+      }
+    });
+
+    document.addEventListener('change', e => {
+      const id = e.target.id;
+      if (['child-picker', 'message-child', 'habit-student'].includes(id)) {
+        selectedStudent = e.target.value;
+        if (id === 'habit-student') return;
+        render();
+        return;
+      }
+      const opKeys = { 'op-year': 'opYear', 'op-period': 'opPeriod', 'op-class': 'opClass', 'op-student': 'opStudent' };
+      if (opKeys[id]) {
+        filters[opKeys[id]] = e.target.value;
+        if (id === 'op-year') filters.opPeriod = '';
+        if (id === 'op-class') filters.opStudent = '';
+        render();
+        return;
+      }
+      const keys = {
+        'status-filter': 'status',
+        'class-filter': 'classId',
+        'analytics-year': 'year',
+        'analytics-period': 'period',
+        'analytics-class': 'analyticsClass',
+        'analytics-student': 'analyticsStudent',
+        'report-year': 'reportYear',
+        'report-period': 'reportPeriod',
+        'report-class': 'reportClass'
+      };
+      if (keys[id]) {
+        filters[keys[id]] = e.target.value;
+        render();
+      }
+    });
+
+    document.addEventListener('input', e => {
+      if (e.target.id === 'search-entity') {
+        filters.search = e.target.value;
+        const pos = e.target.selectionStart;
+        render();
+        const input = document.getElementById('search-entity');
+        input?.focus();
+        input?.setSelectionRange(pos, pos);
+      }
+    });
+
+    document.addEventListener('submit', e => {
+      e.preventDefault();
+      const form = e.target;
+      if (form.id === 'login-form') {
+        if (role === 'guru') {
+          const username = document.getElementById('guru-username').value.trim();
+          if (!username) return toast('Username wajib diisi.', true);
+          const teacher = db.teachers.find(x => x.username === username);
+          if (!teacher) return toast('Username tidak terdaftar. Silakan periksa kembali username Anda.', true);
+          if (!teacher.active) return toast('Akun Guru Anda tidak aktif. Silakan hubungi Operator.', true);
+          actor = teacher;
+        } else if (role === 'parent') {
+          const nis = document.getElementById('student-nis').value.trim();
+          if (!nis) return toast('ID Siswa wajib diisi.', true);
+          const student = db.students.find(x => x.nis === nis);
+          if (!student) return toast('NIS tidak terdaftar. Silakan periksa kembali ID Siswa Anda.', true);
+          if (!student.active) return toast('Akun siswa tidak aktif. Silakan hubungi Operator.', true);
+          const parentLink = db.links.find(l => l.studentId === student.id && db.parents.some(p => p.id === l.parentId && p.active));
+          actor = db.parents.find(p => p.id === parentLink?.parentId) || { id: 'parent-' + student.id, name: 'Orang Tua/Wali ' + student.name, studentId: student.id };
+          actor.studentId = student.id;
+        } else {
+          actor = { id: 'u-op', name: 'Operator SAHABAT' };
+        }
+        view = role === 'operator' ? 'Dashboard' : 'Beranda';
+        selectedStudent = role === 'parent' ? actor.studentId : role === 'guru' ? teacherIds()[0] : 's19';
+        log('Login simulasi DEMO sebagai ' + role);
+        toast('Masuk DEMO berhasil. Ini bukan autentikasi produksi.');
+        render();
+        return;
+      }
+      if (form.id === 'entity-form') {
+        saveEntity(form);
+        return;
+      }
+      if (form.id === 'habit-form') {
+        const kind = form.dataset.kind,
+          period = activePeriod();
+        if (!period) return toast('Tidak ada periode aktif. Input baru ditolak.', true);
+        const data = new FormData(form),
+          studentId = role === 'parent' ? selectedStudent : data.get('studentId'),
+          date = data.get('date');
+        if (!date || !period.id) return toast('Tanggal dan periode wajib diisi.', true);
+        if (!availableIds().includes(studentId)) return toast('Akses ditolak: anak tidak terhubung ke akun ini.', true);
+
+        const target = kind === 'school' ? db.schoolHabits : db.homeHabits,
+          activities = kind === 'school' ? schoolActivities : homeActivities;
+        let count = 0;
+        activities.forEach((activity, i) => {
+          const status = data.get('a' + i);
+          if (target.some(h => h.studentId === studentId && h.periodId === period.id && h.date === date && h.activity === activity)) return;
+          target.push({ id: uid(), studentId, periodId: period.id, date, activity, status, note: String(data.get('note') || ''), verified: false, creatorId: actor.id });
+          count++;
+        });
+        if (!count) return toast('Aktivitas untuk anak dan tanggal tersebut sudah tercatat. EXP ganda dicegah.', true);
+        log('Input ' + (kind === 'school' ? 'School Habit Check' : 'Habit Tracker Rumah') + ' · ' + count + ' aktivitas');
+        toast(`${count} aktivitas tersimpan; menunggu verifikasi guru.`);
+        render();
+        return;
+      }
+      if (form.id === 'assessment-form') {
+        const period = activePeriod(),
+          data = new FormData(form);
+        if (!period) return toast('Periode tidak aktif; input ditolak.', true);
+        if (!teacherIds().includes(data.get('studentId')) || !data.get('date')) return toast('Siswa atau tanggal tidak valid.', true);
+        db.assessments.push({
+          id: uid(),
+          studentId: data.get('studentId'),
+          periodId: period.id,
+          date: data.get('date'),
+          scores: [0, 1, 2].map(i => Number(data.get('score' + i))),
+          note: data.get('note'),
+          follow: data.get('follow')
+        });
+        log('Simpan Penilaian Karakter');
+        toast('Penilaian tersimpan.');
+        render();
+        return;
+      }
+      if (form.id === 'message-form') {
+        const text = document.getElementById('message-text').value.trim(),
+          studentId = selectedStudent;
+        if (!text || !availableIds().includes(studentId)) return toast('Isi pesan dan pilih anak yang terhubung.', true);
+        const parentId = role === 'parent' ? actor.id : document.getElementById('message-recipient')?.value;
+        const teacherId = role === 'guru' ? actor.id : (db.teachers.find(t => t.classId === db.students.find(s => s.id === studentId)?.classId && t.role === 'Wali Kelas')?.id);
+        if (!parentId || !teacherId || !db.links.some(l => l.parentId === parentId && l.studentId === studentId)) return toast('Pengirim, penerima, dan relasi keluarga wajib valid.', true);
+        db.messages.push({
+          id: uid(),
+          studentId,
+          parentId,
+          teacherId,
+          senderId: actor.id,
+          senderName: actor.name,
+          text,
+          date: new Date().toLocaleString('id-ID')
+        });
+        log('Mengirim pesan privat untuk ' + db.students.find(s => s.id === studentId)?.name);
+        toast('Pesan terkirim dalam sesi demo.');
+        render();
+      }
+    });
+
+    // Inisialisasi awal render
+    render();
+  </script>
+</body>
+
+</html>
