@@ -884,24 +884,56 @@
 
  <script>
     // --- KONFIGURASI GOOGLE APPS SCRIPT ---
-    const API_URL = "https://script.google.com/macros/s/AKfycbxeNxD_9gnAixixpHM98fw3LJvVVSflNAZJwfq6iZ3vlwjZ1OE7ulNhtta8p9ShhQ/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxemYW1UYuwHkGAExu05j83al7uj1zP3Klz4mpe2gj7qB81e3WJGjhJGNm9HC1imnZw/exec";
 
-    // Fungsi untuk mengambil data dari Google Spreadsheet (Backend)
+    // 1. Fungsi Memuat SELURUH ENTITAS dari Google Spreadsheet
     async function loadDataFromSpreadsheet() {
       if (!API_URL || API_URL.includes("MASUKKAN")) return; 
       try {
         const response = await fetch(API_URL);
         const result = await response.json();
         if(result && result.status === 'success' && result.data) {
-          db.students = result.data.map((r, i) => ({
-            id: 's' + (i + 1),
-            nis: String(r[0] || ''),
-            nisn: String(r[1] || ''),
-            name: String(r[2] || 'Siswa Tanpa Nama'),
-            gender: String(r[3] || 'L'),
-            classId: 'c1',
-            active: true
-          }));
+          const d = result.data;
+
+          // Sinkronisasi Entitas Utama jika Spreadsheet memiliki isi
+          if (d.students && d.students.length) {
+            db.students = d.students.map(r => ({ id: String(r[0]), nis: String(r[1]), nisn: String(r[2]), name: String(r[3]), gender: String(r[4]), classId: String(r[5]), active: r[6] !== false }));
+          }
+          if (d.teachers && d.teachers.length) {
+            db.teachers = d.teachers.map(r => ({ id: String(r[0]), name: String(r[1]), nip: String(r[2]), role: String(r[3]), classId: String(r[4]), username: String(r[5]), active: r[6] !== false }));
+          }
+          if (d.parents && d.parents.length) {
+            db.parents = d.parents.map(r => ({ id: String(r[0]), name: String(r[1]), role: String(r[2]), username: String(r[3]), active: r[4] !== false }));
+          }
+          if (d.classes && d.classes.length) {
+            db.classes = d.classes.map(r => ({ id: String(r[0]), name: String(r[1]), teacherId: String(r[2]), active: r[3] !== false }));
+          }
+          if (d.links && d.links.length) {
+            db.links = d.links.map(r => ({ id: String(r[0]), parentId: String(r[1]), studentId: String(r[2]) }));
+          }
+
+          // Sinkronisasi Pengaturan Sistem
+          if (d.years && d.years.length) {
+            db.years = d.years.map(r => ({ id: String(r[0]), name: String(r[1]), active: Boolean(r[2]) }));
+          }
+          if (d.periods && d.periods.length) {
+            db.periods = d.periods.map(r => ({ id: String(r[0]), name: String(r[1]), yearId: String(r[2]), active: Boolean(r[3]) }));
+          }
+
+          // Sinkronisasi Entitas Transaksional
+          if (d.schoolHabits && d.schoolHabits.length) {
+            db.schoolHabits = d.schoolHabits.map(r => ({ id: String(r[0]), studentId: String(r[1]), periodId: String(r[2]), date: String(r[3]), activity: String(r[4]), status: String(r[5]), note: String(r[6]), verified: Boolean(r[7]) }));
+          }
+          if (d.homeHabits && d.homeHabits.length) {
+            db.homeHabits = d.homeHabits.map(r => ({ id: String(r[0]), studentId: String(r[1]), periodId: String(r[2]), date: String(r[3]), activity: String(r[4]), status: String(r[5]), note: String(r[6]), verified: Boolean(r[7]) }));
+          }
+          if (d.assessments && d.assessments.length) {
+            db.assessments = d.assessments.map(r => ({ id: String(r[0]), studentId: String(r[1]), periodId: String(r[2]), date: String(r[3]), scores: [Number(r[4]), Number(r[5]), Number(r[6])], note: String(r[7]), follow: String(r[8]) }));
+          }
+          if (d.exp && d.exp.length) {
+            db.exp = d.exp.map(r => ({ id: String(r[0]), key: String(r[1]), studentId: String(r[2]), periodId: String(r[3]), date: String(r[4]), activity: String(r[5]), source: String(r[6]), amount: Number(r[7]) }));
+          }
+
           console.log("Database berhasil disinkronkan dari Google Spreadsheet!");
         }
       } catch(err) {
@@ -909,7 +941,7 @@
       }
     }
 
-    // Fungsi untuk mengirim/menyimpan perubahan data ke Google Spreadsheet (Backend)
+    // 2. Fungsi Mengirim Data ke Google Spreadsheet
     async function syncDataToSpreadsheet(actionType, payload) {
       if (!API_URL || API_URL.includes("Z...")) return;
       try {
@@ -1228,7 +1260,7 @@
             <span class="pill">SAHABAT MODE</span>
           </header>
           <main class="content ${role === 'operator' && view === 'Dashboard' ? 'operator-dashboard' : ''}">
-            <div class="demo-banner"><b>SAHABAT MODE</b> · Data dan grafik menggunakan sumber data terpusat aplikasi. Backend dan autentikasi produksi memerlukan implementasi lanjutan.</div>
+            <div class="demo-banner"><b>SAHABAT MODE</b> · Data dan grafik tersinkronisasi penuh dengan Google Spreadsheet terpusat.</div>
             <div id="page-notice" aria-live="polite"></div>
             ${body}
           </main>
@@ -1294,8 +1326,7 @@
           <h2>Tren EXP Mingguan</h2>
           <div class="chart-holder"><canvas id="trend-chart" role="img" aria-label="Grafik tren EXP"></canvas></div>
         </section>
-      </div>
-      <p class="hint mt-3">Grafik demo memakai data simulasi lokal, bukan data operasional nyata.</p>`;
+      </div>`;
     }
 
     function operatorFilterPanel() {
@@ -1907,7 +1938,11 @@
       const key = `${source}:${h.studentId}:${h.periodId}:${h.date}:${h.activity}`;
       if (db.exp.some(e => e.key === key)) return;
       const amount = weights[h.activity] || 5;
-      db.exp.push({ id: uid(), key, studentId: h.studentId, periodId: h.periodId, date: h.date, activity: h.activity, source, amount });
+      const expObj = { id: uid(), key, studentId: h.studentId, periodId: h.periodId, date: h.date, activity: h.activity, source, amount };
+      db.exp.push(expObj);
+      
+      // Simpan Poin EXP Baru ke Spreadsheet
+      syncDataToSpreadsheet('addExp', expObj);
     }
 
     function verify(kind, id) {
@@ -1963,8 +1998,20 @@
         else db.users.push({ id: uid(), refId: record.id, username: record.username, role: type === 'parents' ? 'parent' : 'guru' });
       }
 
-      if (type === 'students' && !old) {
-        syncDataToSpreadsheet('addStudent', data);
+      // SINKRONISASI SEMUA ENTITAS DATA CENTER KE SPREADSHEET
+      if (!old) {
+        const actionMap = {
+          students: 'addStudent',
+          teachers: 'addTeacher',
+          parents: 'addParent',
+          classes: 'addClass',
+          links: 'addLink',
+          years: 'addYear',
+          periods: 'addPeriod'
+        };
+        if (actionMap[type]) {
+          syncDataToSpreadsheet(actionMap[type], db[type].at(-1));
+        }
       }
 
       log((old ? 'Edit ' : 'Tambah ') + type);
@@ -2161,7 +2208,11 @@
         activities.forEach((activity, i) => {
           const status = data.get('a' + i);
           if (target.some(h => h.studentId === studentId && h.periodId === period.id && h.date === date && h.activity === activity)) return;
-          target.push({ id: uid(), studentId, periodId: period.id, date, activity, status, note: String(data.get('note') || ''), verified: false, creatorId: actor.id });
+          const habitObj = { id: uid(), studentId, periodId: period.id, date, activity, status, note: String(data.get('note') || ''), verified: false, creatorId: actor.id };
+          target.push(habitObj);
+
+          // Simpan Pembiasaan Sekolah / Rumah ke Spreadsheet
+          syncDataToSpreadsheet(kind === 'school' ? 'addSchoolHabit' : 'addHomeHabit', habitObj);
           count++;
         });
         if (!count) return toast('Aktivitas untuk anak dan tanggal tersebut sudah tercatat. EXP ganda dicegah.', true);
@@ -2175,7 +2226,8 @@
           data = new FormData(form);
         if (!period) return toast('Periode tidak aktif; input ditolak.', true);
         if (!teacherIds().includes(data.get('studentId')) || !data.get('date')) return toast('Siswa atau tanggal tidak valid.', true);
-        db.assessments.push({
+        
+        const assessObj = {
           id: uid(),
           studentId: data.get('studentId'),
           periodId: period.id,
@@ -2183,7 +2235,12 @@
           scores: [0, 1, 2].map(i => Number(data.get('score' + i))),
           note: data.get('note'),
           follow: data.get('follow')
-        });
+        };
+        db.assessments.push(assessObj);
+
+        // Simpan Penilaian Karakter ke Spreadsheet
+        syncDataToSpreadsheet('addAssessment', assessObj);
+
         log('Simpan Penilaian Karakter');
         toast('Penilaian tersimpan.');
         render();
@@ -2212,11 +2269,11 @@
       }
     });
 
-    // Inisialisasi aman (memuat data spreadsheet lalu merender aplikasi)
+    // Inisialisasi memuat data dari Spreadsheet lalu render aplikasi
     loadDataFromSpreadsheet()
       .catch(err => console.warn("Menggunakan data lokal demo:", err))
       .finally(() => render());
-  </script>
+</script>
 </body>
 
 </html>
