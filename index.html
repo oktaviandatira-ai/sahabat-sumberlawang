@@ -884,7 +884,7 @@
 
  <script>
     // --- KONFIGURASI GOOGLE APPS SCRIPT ---
-    const API_URL = "https://script.google.com/macros/s/AKfycby9PCANHzJGGkxJis2n1utVmZCwQgevMxMqU5hWbcBfcDAGX9KcCHLJraYjJu_hOOE9/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbxemYW1UYuwHkGAExu05j83al7uj1zP3Klz4mpe2gj7qB81e3WJGjhJGNm9HC1imnZw/exec";
 
     // Fungsi Memuat Data dari Google Spreadsheet
     async function loadDataFromSpreadsheet() {
@@ -1376,49 +1376,19 @@
       render();
     }
 
-    // --- Event Listener Klik yang Diperbaiki agar Menu Berfungsi ---
     document.addEventListener('click', e => {
       const button = e.target.closest('[data-action]');
       if (!button) return;
-      const rawAction = button.dataset.action;
-      const parts = rawAction.split(':');
-      const verb = parts[0];
-      const type = parts.slice(1).join(':'); // Menggabungkan kembali sisa string agar nama menu lengkap (seperti 'Data Guru')
+      const [verb, type, id] = button.dataset.action.split(':');
 
-      if (verb === 'enter') { 
-        role = type; 
-        actor = null; 
-        render(); 
-        return; 
-      }
-      if (rawAction === 'back' || rawAction === 'logout') { 
-        role = null; 
-        actor = null; 
-        view = ''; 
-        modal = null; 
-        render(); 
-        return; 
-      }
-      if (verb === 'view') { 
-        view = type; // Menyimpan nama menu yang diklik ke variabel view agar moduleBody() merender halaman yang tepat
-        render(); 
-        return; 
-      }
-      if (rawAction === 'close-modal') { 
-        modal = null; 
-        render(); 
-        return; 
-      }
-      if (['add', 'delete'].includes(verb)) { 
-        modal = { mode: verb, type, id: parts[2] }; 
-        render(); 
-        return; 
-      }
+      if (verb === 'enter') { role = type; actor = null; render(); return; }
+      if (action === 'back' || action === 'logout') { role = null; actor = null; view = ''; modal = null; render(); return; }
+      if (verb === 'view') { view = type; render(); return; }
+      if (action === 'close-modal') { modal = null; render(); return; }
+      if (['add', 'delete'].includes(verb)) { modal = { mode: verb, type, id }; render(); return; }
       if (verb === 'confirm-delete') {
-        db[type] = db[type].filter(r => r.id !== parts[2]);
-        modal = null; 
-        toast('Data dihapus.'); 
-        render();
+        db[type] = db[type].filter(r => r.id !== id);
+        modal = null; toast('Data dihapus.'); render();
       }
     });
 
