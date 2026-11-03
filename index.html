@@ -882,7 +882,48 @@
     <img data-template-id="school-logo" loading="lazy" class="access-logo" alt="Logo">
   </template>
 
-  <script>
+ <script>
+    // --- KONFIGURASI GOOGLE APPS SCRIPT ---
+    const API_URL = "https://script.google.com/macros/s/AKfycbxemYW1UYuwHkGAExu05j83al7uj1zP3Klz4mpe2gj7qB81e3WJGjhJGNm9HC1imnZw/exec";
+
+    // Fungsi untuk mengambil data dari Google Spreadsheet (Backend)
+    async function loadDataFromSpreadsheet() {
+      if (!API_URL || API_URL.includes("MASUKKAN")) return; 
+      try {
+        const response = await fetch(API_URL);
+        const result = await response.json();
+        if(result && result.status === 'success' && result.data) {
+          db.students = result.data.map((r, i) => ({
+            id: 's' + (i + 1),
+            nis: String(r[0] || ''),
+            nisn: String(r[1] || ''),
+            name: String(r[2] || 'Siswa Tanpa Nama'),
+            gender: String(r[3] || 'L'),
+            classId: 'c1',
+            active: true
+          }));
+          console.log("Database berhasil disinkronkan dari Google Spreadsheet!");
+        }
+      } catch(err) {
+        console.error("Gagal memuat database Google Sheets, menggunakan data demo lokal:", err);
+      }
+    }
+
+    // Fungsi untuk mengirim/menyimpan perubahan data ke Google Spreadsheet (Backend)
+    async function syncDataToSpreadsheet(actionType, payload) {
+      if (!API_URL || API_URL.includes("Z...")) return;
+      try {
+        await fetch(API_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: actionType, data: payload })
+        });
+      } catch(err) {
+        console.error("Gagal menyimpan ke Google Sheets:", err);
+      }
+    }
+
     // --- Data Mockup & Konstanta ---
     const studentRows = [
       ['152', '3207858839', 'Aisyah Safira Az-zahra', 'P', 'Rochmadi', 'Purwanti'],
@@ -1077,47 +1118,6 @@
 
     function points(id, periodId = null) {
       return db.exp.filter(e => e.studentId === id && (!periodId || e.periodId === periodId)).reduce((n, e) => n + e.amount, 0);
-    }
-
-    // --- KONFIGURASI GOOGLE APPS SCRIPT ---
-    const API_URL = "https://script.google.com/macros/s/AKfycbxemYW1UYuwHkGAExu05j83al7uj1zP3Klz4mpe2gj7qB81e3WJGjhJGNm9HC1imnZw/exec";
-
-    // Fungsi untuk mengambil data dari Google Spreadsheet (Backend)
-    async function loadDataFromSpreadsheet() {
-      if (!API_URL || API_URL.includes("MASUKKAN")) return; 
-      try {
-        const response = await fetch(API_URL);
-        const result = await response.json();
-        if(result.status === 'success' && result.data) {
-          db.students = result.data.map((r, i) => ({
-            id: 's' + (i + 1),
-            nis: String(r[0] || ''),
-            nisn: String(r[1] || ''),
-            name: String(r[2] || 'Siswa Tanpa Nama'),
-            gender: String(r[3] || 'L'),
-            classId: 'c1',
-            active: true
-          }));
-          console.log("Database berhasil disinkronkan dari Google Spreadsheet!");
-        }
-      } catch(err) {
-        console.error("Gagal memuat database Google Sheets, menggunakan data demo:", err);
-      }
-    }
-
-    // Fungsi untuk mengirim/menyimpan perubahan data ke Google Spreadsheet (Backend)
-    async function syncDataToSpreadsheet(actionType, payload) {
-      if (!API_URL || API_URL.includes("Z...")) return;
-      try {
-        await fetch(API_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: actionType, data: payload })
-        });
-      } catch(err) {
-        console.error("Gagal menyimpan ke Google Sheets:", err);
-      }
     }
 
     // --- Render App ---
@@ -1963,7 +1963,6 @@
         else db.users.push({ id: uid(), refId: record.id, username: record.username, role: type === 'parents' ? 'parent' : 'guru' });
       }
 
-      // Sinkronisasi penambahan data siswa ke Spreadsheet
       if (type === 'students' && !old) {
         syncDataToSpreadsheet('addStudent', data);
       }
@@ -2213,8 +2212,10 @@
       }
     });
 
-    // Inisialisasi awal memuat data dari Spreadsheet lalu render aplikasi
-    loadDataFromSpreadsheet().then(() => render());
+    // Inisialisasi aman (memuat data spreadsheet lalu merender aplikasi)
+    loadDataFromSpreadsheet()
+      .catch(err => console.warn("Menggunakan data lokal demo:", err))
+      .finally(() => render());
   </script>
 </body>
 
