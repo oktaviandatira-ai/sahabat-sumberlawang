@@ -1204,7 +1204,17 @@
     function loginPage() {
       const label = { operator: 'OPERATOR', guru: 'GURU', parent: 'ORANG TUA' }[role];
       const identities = role === 'operator' ? [['u-op', 'Operator SAHABAT']] : role === 'guru' ? db.teachers.filter(t => t.active && t.username).map(t => [t.id, `${t.name} — ${t.role}`]) : [];
-      const parentLogin = role === 'parent' ? `<div class="field"><label for="student-nis">ID Siswa (NIS)</label><input id="student-nis" name="studentNis" type="text" inputmode="numeric" placeholder="Masukkan NIS siswa yang terdaftar di Operator" autocomplete="off"></div>` : role === 'guru' ? `<div class="field"><label for="guru-username">Username Guru</label><input id="guru-username" name="guruUsername" type="text" placeholder="Masukkan username Guru sesuai data Operator" autocomplete="username" required></div>` : `<div class="field"><label for="demo-identity">Akun ${label} aktif · SAHABAT MODE</label><select id="demo-identity" required>${options(identities, identities[0]?.[0])}</select></div>`;
+      
+      let parentLogin = '';
+      if (role === 'parent') {
+        parentLogin = `<div class="field"><label for="student-nis">ID Siswa (NIS)</label><input id="student-nis" name="studentNis" type="text" inputmode="numeric" placeholder="Masukkan NIS siswa yang terdaftar di Operator" autocomplete="off"></div>`;
+      } else if (role === 'guru') {
+        parentLogin = `<div class="field"><label for="guru-username">Username Guru</label><input id="guru-username" name="guruUsername" type="text" placeholder="Masukkan username Guru sesuai data Operator" autocomplete="username" required></div>`;
+      } else if (role === 'operator') {
+        parentLogin = `<div class="field"><label for="operator-password">Kata Sandi Operator</label><input id="operator-password" name="operatorPassword" type="password" placeholder="Masukkan sandi operator" required></div>`;
+      } else {
+        parentLogin = `<div class="field"><label for="demo-identity">Akun ${label} aktif · SAHABAT MODE</label><select id="demo-identity" required>${options(identities, identities[0]?.[0])}</select></div>`;
+      }
 
       return `<main class="login-page">
         <section class="login-photo">
@@ -2168,7 +2178,14 @@
       e.preventDefault();
       const form = e.target;
       if (form.id === 'login-form') {
-        if (role === 'guru') {
+        if (role === 'operator') {
+          const password = document.getElementById('operator-password').value.trim();
+          // Tentukan kata sandi operator di sini (contoh: "admin123")
+          if (password !== 'sdaus24') {
+            return toast('Kata sandi operator salah! Silakan coba lagi.', true);
+          }
+          actor = { id: 'u-op', name: 'Operator SAHABAT' };
+        } else if (role === 'guru') {
           const username = document.getElementById('guru-username').value.trim();
           if (!username) return toast('Username wajib diisi.', true);
           const teacher = db.teachers.find(x => x.username === username);
@@ -2184,8 +2201,6 @@
           const parentLink = db.links.find(l => l.studentId === student.id && db.parents.some(p => p.id === l.parentId && p.active));
           actor = db.parents.find(p => p.id === parentLink?.parentId) || { id: 'parent-' + student.id, name: 'Orang Tua/Wali ' + student.name, studentId: student.id };
           actor.studentId = student.id;
-        } else {
-          actor = { id: 'u-op', name: 'Operator SAHABAT' };
         }
         view = role === 'operator' ? 'Dashboard' : 'Beranda';
         selectedStudent = role === 'parent' ? actor.studentId : role === 'guru' ? teacherIds()[0] : 's19';
