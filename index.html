@@ -884,7 +884,7 @@
 
  <script>
     // --- KONFIGURASI GOOGLE APPS SCRIPT ---
-    const API_URL = "https://script.google.com/macros/s/AKfycbyd5kUkUep4SrCyb93ILMlJ632Ky8TaTmfz8NpvrQD_xHvRkSr2fBaIBdd70J7JL923/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbwzJ5Aw_h4TF_TJOq_VRrJav_wLOvKKzFlde-eKVWbSCdRKKiQanlv86qDK9_raGCnL/exec";
 
     // 1. Fungsi Memuat SELURUH ENTITAS dari Google Spreadsheet
     async function loadDataFromSpreadsheet() {
@@ -2104,12 +2104,18 @@
       if (verb === 'confirm-delete') {
         const item = db[type].find(r => r.id === id);
         if (!item) return;
+
+        // 1. Kirim perintah hapus ke Google Spreadsheet untuk semua jenis entitas
+        syncDataToSpreadsheet('deleteData', { type: type, item: item });
+
+        // 2. Hapus data dari tampilan lokal
         db[type] = db[type].filter(r => r.id !== id);
         if (type === 'students') db.links = db.links.filter(l => l.studentId !== id);
         if (type === 'parents') db.links = db.links.filter(l => l.parentId !== id);
+
         log('Hapus ' + type + ': ' + entityName(type, item));
         modal = null;
-        toast('Data dihapus.');
+        toast('Data berhasil dihapus dari antarmuka & Google Sheets.');
         render();
       }
     });
