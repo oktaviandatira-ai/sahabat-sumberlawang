@@ -1009,7 +1009,7 @@
         ['MONITORING & LAPORAN', 'Analytics / Recap Center', 'Laporan', 'Audit Log']
       ],
       guru: [
-        ['MENU', 'Beranda', 'Kelas Saya & Siswa Saya', 'School Habit Check', 'Kehadiran', 'Penilaian Karakter', 'Validasi', 'Buku Penghubung', 'Catatan Sinergi', 'Grafik Perkembangan', 'Laporan']
+        ['MENU', 'Beranda', 'Kelas Saya & Siswa Saya', 'School Habit Check', 'Penilaian Karakter', 'Validasi', 'Buku Penghubung', 'Catatan Sinergi', 'Grafik Perkembangan', 'Laporan']
       ],
       parent: [
         ['MENU', 'Beranda', 'Profil Ananda', 'Habit Tracker Rumah', 'Catatan Sinergi', 'Grafik Perkembangan', 'Laporan']
@@ -1835,7 +1835,7 @@
 
       if (role === 'guru') {
         if (view === 'Kelas Saya & Siswa Saya') return heading('KELAS SAYA', 'Kelas Saya & Siswa Saya', actor.name) + `<section class="card mt-4"><h2>${esc(db.classes.find(c => c.id === actor.classId)?.name || '')}</h2>${db.students.filter(s => teacherIds().includes(s.id)).map(s => `<div class="check-row">${esc(s.name)} <span class="pill">${points(s.id)} EXP</span></div>`).join('')}</section>`;
-        if (view === 'School Habit Check' || view === 'Kehadiran') return habitPage('school');
+        if (view === 'School Habit Check') return habitPage('school');
         if (view === 'Penilaian Karakter') return assessmentPage();
         if (view === 'Validasi') return heading('PEMBINAAN SEKOLAH', 'Validasi', 'Verifikasi aktivitas sebelum EXP diberikan.') + `<section class="card mt-4"><h2>Menunggu Verifikasi</h2>${habitHistory('school')}${habitHistory('home')}</section>`;
       }
